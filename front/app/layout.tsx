@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// import { fontDefault } from '/lib/ui/fonts'
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +13,49 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
+
+// import { Metadata, Viewport } from "next";
+// import { Providers } from "./providers";
+// import { fontDefault } from '@/src/lib/ui/fonts'
+// import "@/src/styles/globals.css";
+// import DeviceTypeLayout from "@/src/components/common/device-type-layout";
+
+// // import clsx from "clsx";
+
+// export const metadata: Metadata = {
+// 	title: '',
+// 	description: 'b',
+// 	icons: {
+// 		icon: "/favicon.ico",
+// 	},
+// };
+
+// export const viewport: Viewport = {
+// 	themeColor: [
+// 		{ media: "(prefers-color-scheme: light)", color: "white" },
+// 		{ media: "(prefers-color-scheme: dark)", color: "black" },
+// 	],
+// }
+
+// export default function RootLayout({ children, }: { children: React.ReactNode; }) {
+
+// 	return (
+// 		<html lang="ko" suppressHydrationWarning className={`${fontDefault.variable}`}>
+// 			<head />
+// 			{/* min-h-screen bg-background font-sans antialiased */}
+// 			<body className={`antialiased`}
+// 			>
+// 				<DeviceTypeLayout>
+// 					<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+// 						{children}
+// 					</Providers>
+// 				</DeviceTypeLayout>
+// 			</body>
+// 		</html>
+// 	);
+// }
