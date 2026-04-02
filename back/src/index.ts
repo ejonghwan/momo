@@ -1,31 +1,35 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
+import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config();
+// 환경 변수 로드
+const envMode = process.env.NODE_ENV || 'local';
+dotenv.config({ path: path.resolve(process.cwd(), `.env.${envMode}`) });
 
 const app = express();
-const PORT = process.env.PORT || 4009;
-
-// 1. 보안 헤더 설정
-app.use(helmet());
-
-// 2. CORS 설정 (프론트엔드 주소만 허용)
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
-
+app.use(cors({ origin: process.env.CLIENT_URL })); // 3009 포트 허용
 app.use(express.json());
 
-// 테스트용 라우트
-app.get('/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Backend is running!' });
+// 슈파베이스 관리자 클라이언트
+const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+// 테스트용 POST 라우트
+app.post('/api/test-save', async (req, res) => {
+    const { amount, category, description } = req.body;
+
+    const { data, error } = await supabase
+        .from('transactions') // 슈파베이스에 이 이름으로 테이블이 있어야 합니다!
+        .insert([{ amount, category, description }])
+        .select();
+
+    if (error) return res.status(500).json({ error: error.message });
+    res.json({ success: true, data });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 서버가 포트 ${PORT}에서 작동 중입니다!`);
-});
-
+const PORT = process.env.PORT || 4009;
+app.listen(PORT, () => console.log(`🚀 백엔드 서버가 ${PORT}에서 작동 중!`));

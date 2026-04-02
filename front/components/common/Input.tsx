@@ -1,9 +1,16 @@
-import React from 'react'
+// import React from 'react'
 
-const Input = () => {
-   return (
-      <div>Input</div>
-   )
-}
+// interface InputProps {
+   
+// }
 
-export default Input
+
+// const Input = ({ props }: InputProps) => {
+//    return (
+//       <div>
+//          <input type="text" {...props} />
+//       </div>
+//    )
+// }
+
+// export default Input
