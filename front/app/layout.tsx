@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-// import { fontDefault } from '/lib/ui/fonts'
-import "./globals.css";
+import { fontDefault } from "@/lib/ui/fonts";
+import { Providers } from "@/app/Provider";
+import DeviceTypeLayout from "@/utils/device-type-layout";
+import "@/styles/reset.css";
+import "@/styles/global.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="ko" className={`${fontDefault.variable}`}>
+      <body className="">
+        <DeviceTypeLayout>
+          <Providers>{children}</Providers>
+        </DeviceTypeLayout>
+      </body>
     </html>
   );
 }

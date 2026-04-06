@@ -1,10 +1,16 @@
-import TestPage from "@/components/test/TestCompo";
-import Image from "next/image";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className="">
-      <TestPage />
-    </div>
-  );
-}
+const Page = () => {
+  // path 없이 오는 경우 /home으로 리디렉션
+  // 14v
+  // const headersList = headers();
+  // const headerPathname = headersList.get('x-pathname') || "";
+
+  // 16v
+  const headersList = headers();
+  const headerPathname = headersList["x-pathname"] ?? "";
+  if (!headerPathname) redirect("/home");
+};
+
+export default Page;

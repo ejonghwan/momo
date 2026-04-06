@@ -1,0 +1,122 @@
+:root {
+  /* light 모드 기본값 */
+  --color-bg100: #fff;
+  --color-bg200: #f7f7f7;
+  --color-bg300: #dedede;
+  --color-bg400: #e0e0e0;
+  --color-line100: #8b8b8b;
+  --color-line200: #8b8b8b;
+  --color-line300: #8b8b8b;
+  --color-star: #ebdf32;
+  --color-divider100: #8b8b8b;
+  --color-gray9: #8b8b8b;
+  --color-gray10: #8b8b8b;
+  --scroll-color: rgb(108, 108, 108);
+  --scroll-bg-color: rgb(71, 71, 71);
+
+  --color-primary: #d85010;
+  --color-primary2: #d85010;
+  --color-secondary: #8fe519;
+  --color-secondary2: #6dbc00;
+}
+
+.dark {
+  /* 다크 모드에서 변경 */
+  --color-bg100: #000000;
+  --color-bg200: #111;
+  --color-bg300: #18181b;
+  --color-bg400: #3d4047;
+  /* --color-gray3: #3d4047; */
+  --color-line100: #262626;
+  --color-line200: #363636;
+  --color-line300: #4a4a4a;
+  --color-star: #ebdf32;
+  --color-divider100: #161616;
+  --color-gray6: #8b8b8b;
+  --color-gray7: #8b8b8b;
+  --color-gray8: #8b8b8b;
+  --color-gray9: #8b8b8b;
+  --color-gray10: #8b8b8b;
+  --scroll-color: rgb(108, 108, 108);
+  --scroll-bg-color: rgb(71, 71, 71);
+  --color-primary: #d85010;
+  --color-primary2: #d85010;
+  --color-secondary: #8fe519;
+  --color-secondary2: #6dbc00;
+}
+
+/* html[lang="ko"] { */
+html {
+  font-family: var(--font-default), system-ui, sans-serif;
+}
+
+/* scroll */
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  /* height: 100%; */
+}
+
+*::-webkit-scrollbar-thumb {
+  height: 20%;
+  background: var(--scroll-color);
+  /* 스크롤바의 색상 */
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-bg-color);
+  /*스크롤바 뒷 배경 색상*/
+}
+
+.blind {
+  position: absolute;
+  left: -99999px;
+  top: -99999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin-left: -1px;
+  border: 0 none !important;
+  background: transparent !important;
+  color: transparent !important;
+}
+
+/* media query */
+.mo {
+  display: none;
+}
+
+.pc {
+  display: block;
+}
+
+.mo-flex {
+  display: none;
+}
+
+.pc-flex {
+  display: flex;
+}
+
+@media (max-width: 1024px) {
+  .mo {
+    display: block;
+  }
+
+  .pc {
+    display: none;
+  }
+
+  .mo-flex {
+    display: flex;
+  }
+
+  .pc-flex {
+    display: none;
+  }
+
+  .contents-wrapper {
+    width: 100%;
+  }
+}
