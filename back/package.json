@@ -2,9 +2,9 @@
   "name": "momo_back",
   "type": "module",
   "scripts": {
-    "dev:local": "NODE_ENV=local tsx watch src/index.ts",
-    "dev": "NODE_ENV=development tsx watch src/index.ts",
-    "prod": "NODE_ENV=production tsx src/index.ts",
+    "dev:local": "cross-env NODE_ENV=local tsx watch src/index.ts",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "prod": "cross-env NODE_ENV=production tsx src/index.ts",
     "build": "tsc"
   },
   "dependencies": {
