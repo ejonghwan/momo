@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-const Page = () => {
+const Page = async () => {
   // path 없이 오는 경우 /home으로 리디렉션
   // 14v
   // const headersList = headers();
@@ -9,7 +9,7 @@ const Page = () => {
 
   // 16v
   const headersList = headers();
-  const headerPathname = headersList["x-pathname"] ?? "";
+  const headerPathname = await headersList["x-pathname"] ?? "";
   if (!headerPathname) redirect("/home");
 };
 
