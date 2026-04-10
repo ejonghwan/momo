@@ -12,10 +12,10 @@ export default function LoginButton() {
       options: {
         // 인증 후 돌아올 우리 서비스의 callback 주소
         redirectTo: `${window.location.origin}/auth/callback`,
-         queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
+        //  queryParams: {
+        //   access_type: 'offline',
+        //   prompt: 'consent',
+        // },
       },
     })
   }
