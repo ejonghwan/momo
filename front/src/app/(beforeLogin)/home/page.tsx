@@ -7,12 +7,12 @@ import LogoutButton from "@/components/LogoutButton";
 import LoginButtonKaKao from "@/components/LoginButtonKaKao";
 
 const HomePage = () => {
- 
+
   const user = useUserStore((state) => state.user);
   const isLoggedIn = !!user; // 유저 정보가 있으면 true
 
 
-  
+
   console.log('user????', user)
   if (!isLoggedIn) {
     return <div>
@@ -30,7 +30,7 @@ const HomePage = () => {
   return <div>before Layoutaa
     {user.user_metadata?.avatar_url && (
       <>
-        <div>{user &&  <LogoutButton />}</div>
+        <div>{user && <LogoutButton />}</div>
         <img src={user.user_metadata.avatar_url} alt="profile" width={50} />
         <div>{user.user_metadata.email}</div>
       </>

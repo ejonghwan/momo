@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/store/supabase/client'
 
 
 export default function LoginButton() {
@@ -21,7 +21,7 @@ export default function LoginButton() {
   }
 
   return (
-    <button 
+    <button
       onClick={handleKakaoLogin}
     >
       카카오로 로그인

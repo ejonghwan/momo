@@ -3,8 +3,9 @@
 import { useEffect } from 'react'
 import { useUserStore } from '@/store/front/useUserStore'
 import { createBrowserClient } from '@supabase/ssr'
+import { User } from '@supabase/supabase-js'
 
-const AuthProvider = ({ serverUser, children }: { serverUser: any, children: React.ReactNode }) => {
+const AuthProvider = ({ serverUser, children }: { serverUser: User | null, children: React.ReactNode }) => {
    const setUser = useUserStore((state) => state.setUser)
 
    useEffect(() => {

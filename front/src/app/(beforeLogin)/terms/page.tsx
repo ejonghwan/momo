@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
+import { User } from '@supabase/supabase-js' // Supabase 제공 타입 임포트
 import router from 'next/router'
+// import { User } from '@/types/UserType'
 
 export default function TermsPage() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -42,10 +44,10 @@ export default function TermsPage() {
   }
 
 
-const handleCancel = async () => {
-  await supabase.auth.signOut(); // 쿠키 삭제 및 세션 종료
-  router.push('/login'); // 다시 로그인 페이지로
-};
+  const handleCancel = async () => {
+    await supabase.auth.signOut(); // 쿠키 삭제 및 세션 종료
+    router.push('/login'); // 다시 로그인 페이지로
+  };
 
 
   return (
@@ -54,7 +56,7 @@ const handleCancel = async () => {
       {/* 아까 만든 객체 체크 로직 UI */}
       <button onClick={handleAgree}>동의하고 시작하기</button>
       <button onClick={handleCancel}>가입취소</button>
-      
+
     </div>
   )
 }
