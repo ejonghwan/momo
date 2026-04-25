@@ -1,3 +1,9 @@
+@use "./reset.scss";
+@use "../helper/mixins";
+@use "../helper/variables";
+
+
+
 :root {
   /* light 모드 기본값 */
   --color-bg100: #fff;

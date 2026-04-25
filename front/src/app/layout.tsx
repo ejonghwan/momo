@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { fontDefault } from "@/lib/ui/fonts";
 import { Providers } from "@/app/Provider";
 import DeviceTypeLayout from "@/utils/device-type-layout";
-import "@/styles/reset.css";
-import "@/styles/global.css";
+// import "@/styles/base/reset.scss";
+import "@/styles/base/global.scss";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { getCookieStore } from '@/store/supabase/supabase'
 
