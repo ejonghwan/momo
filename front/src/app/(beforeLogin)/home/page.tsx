@@ -26,7 +26,9 @@ const HomePage = () => {
   // const is = useIsMounted()
 
 
-
+  useEffect(() => {
+    console.log(user)
+  }, [])
 
 
   if (!isInitialized) {
@@ -59,6 +61,8 @@ const HomePage = () => {
             <div>{user && <LogoutButton />}</div>
             <img src={user.user_metadata.avatar_url} alt="profile" width={50} />
             <div>{user.user_metadata.email}</div>
+            <div>{user.user_metadata.full_name}</div>
+            <div>{user.app_metadata.provider}</div>
           </>
         )}
       </>
