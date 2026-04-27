@@ -54,7 +54,15 @@
 /* html[lang="ko"] { */
 html {
   font-family: var(--font-default), system-ui, sans-serif;
+  font-size: 1px;
 }
+
+body {
+  font-size: 16rem;
+}
+
+
+
 
 /* scroll */
 *::-webkit-scrollbar {

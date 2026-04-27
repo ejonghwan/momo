@@ -1,16 +1,15 @@
 import React from 'react'
+import UxImage from '@/components/style-ui/common/UxImage'
 
-const UserAvatar = () => {
+
+const UserAvatar = ({ avatartUrl }: { avatartUrl: string } ) => {
+
+   console.log('avatartUrl??', avatartUrl)
+
    return (
-      <>
-         {/* {user.user_metadata?.avatar_url && (
-            <>
-               <div>{user && <LogoutButton />}</div>
-               <img src={user.user_metadata.avatar_url} alt="profile" width={50} />
-               <div>{user.user_metadata.email}</div>
-            </>
-         )} */}
-      </>
+      <div style={{ width: "20rem", height: "auto" }}>
+         <UxImage src={avatartUrl} alt="" fill style={{ objectFit: 'cover' }} isNextImg />
+      </div>
    )
 }
 

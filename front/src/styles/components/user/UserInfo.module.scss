@@ -1,0 +1,24 @@
+.user__info__wrap {
+    border: 1px solid red;
+    &--provider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-weight: 500;
+        border-radius: 50%;
+        width: 30rem;
+        height: 30rem;
+
+        &:global(.g) {
+            background-color: #4285f4;
+        }
+        &:global(.k) {
+            background-color: #f9e000;
+        }
+    }
+}
+
+
+// #4285f4
+// #f9e000
