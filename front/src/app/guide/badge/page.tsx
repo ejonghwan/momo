@@ -6,7 +6,7 @@ const Badge = () => {
       <div>
         <h1>Badge type1</h1>
         <UxBadgeWrap>
-          <UxBadge size="xsmall" color="blue" variant="">
+          <UxBadge size="xsmall" bgColor="bg_grey_100" txtColor="blue" variant="default">
             xsmall
           </UxBadge>
           <UxBadge size="small" color="blue" variant="fill">

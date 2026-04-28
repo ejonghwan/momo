@@ -4,41 +4,38 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/components/style-ui/common/btn1';
 
+import '@/styles/common/UxBadge.scss';
+
 // ----------------------------------------------------------------------------- UxBadge
 
-const badgeVariants = cva('ux__badge', {
+const badgeVariants = cva('badge', {
   variants: {
     variant: {
-      success: '',
-      warning: '',
-      error: '',
-      info: '',
-      solid: '',
-      outline: '',
+      // success: '',
+      // warning: '',
+      // error: '',
+      // info: '',
+      // solid: '',
+      // outline: '',
 
-      // 1. 강조도에 따른 분류
-      contained: 'ux__badge--contained', // 배경색이 꽉 찬 스타일
-      outlined: 'ux__badge--outlined', // 테두리만 있는 스타일
-      soft: 'ux__badge--soft', // 연한 배경색 스타일
-
-      // 2. 혹은 역할에 따른 분류
-      alarm: 'ux__badge--alarm', // 알림용 (우측 상단에 붙는 작은 점 등)
-      tag: 'ux__badge--tag', // 태그 형태
+      default: 'badge--default',
+      solid: 'badge--solid',
+      outline: 'badge--outline',
       none: '',
     },
 
     size: {
-      xlarge: 'badge__xlarge',
-      large: 'badge__large',
-      medium: 'badge__medium',
-      small: 'badge__small',
-      xsmall: 'badge__xsmall',
-      none: 'badge__none',
+      xlarge: 'badge--xlarge',
+      large: 'badge--large',
+      medium: 'badge--medium',
+      small: 'badge--small',
+      xsmall: 'badge--xsmall',
+      none: '',
     },
   },
   defaultVariants: {
-    variant: 'none',
-    size: 'none',
+    variant: 'default',
+    size: 'small',
   },
 });
 
@@ -91,7 +88,8 @@ export const UxBadge = ({
 const badgeWrapVariants = cva('badge__wrap', {
   variants: {
     variant: {
-      uiType: '',
+      flex: 'badge__wrap--flex',
+      flexWrap: 'badge__wrap--flex-wrap',
       none: '',
     },
   },

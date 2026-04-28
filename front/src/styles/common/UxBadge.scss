@@ -1,0 +1,29 @@
+.badge__wrap {
+  &--flex {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  &--flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    &--xlarge {
+      width: 20rem;
+      height: 20rem;
+    }
+    &--large {
+      width: 20rem;
+      height: 20rem;
+    }
+    &--small {
+      width: 20rem;
+      height: 20rem;
+    }
+    &--xsmall {
+      width: 20rem;
+      height: 20rem;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+
+$steps: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900);
+
+@each $step in $steps {
+  .bg_grey_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_greyOpacity_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_blue_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_red_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_orange_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_yellow_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_green_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+@each $step in $steps {
+  .bg_teal_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+@each $step in $steps {
+  .bg_purple_#{$step} {
+    background-color: var(--grey_#{$step});
+  }
+}
+
+.bg_white {
+  background-color: var(--bg_white);
+}
+.bg_gray {
+  background-color: var(--bg_gray);
+}

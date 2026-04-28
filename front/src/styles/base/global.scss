@@ -1,55 +1,153 @@
-@use "./reset.scss";
-@use "../helper/mixins";
-@use "../helper/variables";
-
-
+@use '@/styles/base/reset.scss';
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+@use '@/styles/base/bgColor.scss';
 
 :root {
-  /* light 모드 기본값 */
-  --color-bg100: #fff;
-  --color-bg200: #f7f7f7;
-  --color-bg300: #dedede;
-  --color-bg400: #e0e0e0;
-  --color-line100: #8b8b8b;
-  --color-line200: #8b8b8b;
-  --color-line300: #8b8b8b;
-  --color-star: #ebdf32;
-  --color-divider100: #8b8b8b;
-  --color-gray9: #8b8b8b;
-  --color-gray10: #8b8b8b;
-  --scroll-color: rgb(108, 108, 108);
-  --scroll-bg-color: rgb(71, 71, 71);
+  /* ## Grey */
+  --grey_50: #{$grey_50};
+  --grey_100: #{$grey_100};
+  --grey_200: #{$grey_200};
+  --grey_300: #{$grey_300};
+  --grey_400: #{$grey_400};
+  --grey_500: #{$grey_500};
+  --grey_600: #{$grey_600};
+  --grey_700: #{$grey_700};
+  --grey_800: #{$grey_800};
+  --grey_900: #{$grey_900};
 
-  --color-primary: #d85010;
-  --color-primary2: #d85010;
-  --color-secondary: #8fe519;
-  --color-secondary2: #6dbc00;
+  /* ## Grey Opacity */
+  --greyOpacity_50: #{$greyOpacity_50};
+  --greyOpacity_100: #{$greyOpacity_100};
+  --greyOpacity_200: #{$greyOpacity_200};
+  --greyOpacity_300: #{$greyOpacity_300};
+  --greyOpacity_400: #{$greyOpacity_400};
+  --greyOpacity_500: #{$greyOpacity_500};
+  --greyOpacity_600: #{$greyOpacity_600};
+  --greyOpacity_700: #{$greyOpacity_700};
+  --greyOpacity_800: #{$greyOpacity_800};
+  --greyOpacity_900: #{$greyOpacity_900};
+
+  /* ## Blue */
+  --blue_50: #{$blue_50};
+  --blue_100: #{$blue_100};
+  --blue_200: #{$blue_200};
+  --blue_300: #{$blue_300};
+  --blue_400: #{$blue_400};
+  --blue_500: #{$blue_500};
+  --blue_600: #{$blue_600};
+  --blue_700: #{$blue_700};
+  --blue_800: #{$blue_800};
+  --blue_900: #{$blue_900};
+
+  /* ## Red */
+  --red_50: #{$red_50};
+  --red_100: #{$red_100};
+  --red_200: #{$red_200};
+  --red_300: #{$red_300};
+  --red_400: #{$red_400};
+  --red_500: #{$red_500};
+  --red_600: #{$red_600};
+  --red_700: #{$red_700};
+  --red_800: #{$red_800};
+  --red_900: #{$red_900};
+
+  /* ## Orange */
+  --orange_50: #{$orange_50};
+  --orange_100: #{$orange_100};
+  --orange_200: #{$orange_200};
+  --orange_300: #{$orange_300};
+  --orange_400: #{$orange_400};
+  --orange_500: #{$orange_500};
+  --orange_600: #{$orange_600};
+  --orange_700: #{$orange_700};
+  --orange_800: #{$orange_800};
+  --orange_900: #{$orange_900};
+
+  /* ## Yellow */
+  --yellow_50: #{$yellow_50};
+  --yellow_100: #{$yellow_100};
+  --yellow_200: #{$yellow_200};
+  --yellow_300: #{$yellow_300};
+  --yellow_400: #{$yellow_400};
+  --yellow_500: #{$yellow_500};
+  --yellow_600: #{$yellow_600};
+  --yellow_700: #{$yellow_700};
+  --yellow_800: #{$yellow_800};
+  --yellow_900: #{$yellow_900};
+
+  /* ## Green */
+  --green_50: #{$green_50};
+  --green_100: #{$green_100};
+  --green_200: #{$green_200};
+  --green_300: #{$green_300};
+  --green_400: #{$green_400};
+  --green_500: #{$green_500};
+  --green_600: #{$green_600};
+  --green_700: #{$green_700};
+  --green_800: #{$green_800};
+  --green_900: #{$green_900};
+
+  /* ## Teal */
+  --teal_50: #{$tea_50};
+  --teal_100: #{$tea_100};
+  --teal_200: #{$tea_200};
+  --teal_300: #{$tea_300};
+  --teal_400: #{$tea_400};
+  --teal_500: #{$tea_500};
+  --teal_600: #{$tea_600};
+  --teal_700: #{$tea_700};
+  --teal_800: #{$tea_800};
+  --teal_900: #{$tea_900};
+
+  /* ## Purple */
+  --purple_50: #{$purple_50};
+  --purple_100: #{$purple_100};
+  --purple_200: #{$purple_200};
+  --purple_300: #{$purple_300};
+  --purple_400: #{$purple_400};
+  --purple_500: #{$purple_500};
+  --purple_600: #{$purple_600};
+  --purple_700: #{$purple_700};
+  --purple_800: #{$purple_800};
+  --purple_900: #{$purple_900};
+
+  /* ## Background */
+  --bg_white: #{$bg_white};
+  --bg_gray: #{$bg_gray};
 }
 
-.dark {
-  /* 다크 모드에서 변경 */
-  --color-bg100: #000000;
-  --color-bg200: #111;
-  --color-bg300: #18181b;
-  --color-bg400: #3d4047;
-  /* --color-gray3: #3d4047; */
-  --color-line100: #262626;
-  --color-line200: #363636;
-  --color-line300: #4a4a4a;
-  --color-star: #ebdf32;
-  --color-divider100: #161616;
-  --color-gray6: #8b8b8b;
-  --color-gray7: #8b8b8b;
-  --color-gray8: #8b8b8b;
-  --color-gray9: #8b8b8b;
-  --color-gray10: #8b8b8b;
-  --scroll-color: rgb(108, 108, 108);
-  --scroll-bg-color: rgb(71, 71, 71);
-  --color-primary: #d85010;
-  --color-primary2: #d85010;
-  --color-secondary: #8fe519;
-  --color-secondary2: #6dbc00;
+/* 다크모드 설정 */
+// @media (prefers-color-scheme: dark) {
+html[data-theme='dark'] {
+  // :root {
+  /* ## Grey (밝은 색과 어두운 색을 반전) */
+  --grey_50: #{$grey_900};
+  --grey_100: #{$grey_800};
+  --grey_200: #{$grey_700};
+  --grey_300: #{$grey_600};
+  --grey_400: #{$grey_500};
+  --grey_500: #{$grey_400};
+  --grey_600: #{$grey_300};
+  --grey_700: #{$grey_200};
+  --grey_800: #{$grey_100};
+  --grey_900: #{$grey_50};
+
+  /* ## Background (다크모드 전용 배경) */
+  --bg_white: #{$grey_900}; // 흰색 배경은 가장 어둡게
+  --bg_gray: #121212; // 기본 회색 배경도 더 깊게
+
+  /* ## Blue (다크에선 약간 더 밝은 톤을 메인으로) */
+  --blue_500: #{$blue_400};
+  --blue_600: #{$blue_300};
+
+  /* ## Grey Opacity (다크모드에선 불투명도를 살짝 조절) */
+  --greyOpacity_50: rgba(255, 255, 255, 0.05);
+  --greyOpacity_100: rgba(255, 255, 255, 0.1);
+  // }
 }
+
+// .dark {}
 
 /* html[lang="ko"] { */
 html {
@@ -60,9 +158,6 @@ html {
 body {
   font-size: 16rem;
 }
-
-
-
 
 /* scroll */
 *::-webkit-scrollbar {
