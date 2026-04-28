@@ -1,5 +1,5 @@
+import { ElementType } from 'react';
 import Image, { ImageProps } from 'next/image';
-import { ElementType } from 'react'
 
 interface CustomImageProps extends ImageProps {
   wrapClassName?: string;
@@ -11,43 +11,42 @@ interface CustomImageProps extends ImageProps {
   isNextImg?: boolean;
   nextImgWidth?: string;
   nextImgHeight?: string;
-  uiType: "pure" | "circle" | "quadrangle_20" | "quadrangle_80" | "quadrangle_100"
+  uiType: 'pure' | 'circle' | 'quadrangle_20' | 'quadrangle_80' | 'quadrangle_100';
 }
 
-
 const UxImage = ({
-  uiType,
+  uiType = 'pure',
   wrapClassName,
   wrapTag,
   src,
   width,
   height,
-  alt = "",
+  alt = '',
   isNextImg = false,
   nextImgWidth,
   nextImgHeight,
   style,
   ...props
 }: CustomImageProps) => {
-
   const Component = wrapTag || 'div';
-
-
 
   return (
     <>
-      {
-        isNextImg ? (
-          <Component className={wrapClassName} style={{ position: "relative", width: nextImgWidth, height: nextImgHeight }} >
-            <Image src={src} {...props} width={width} height={height} alt={alt} style={style} />
-          </Component >
-        ) : (
-          <Component className={wrapClassName}>
-            <img src={src} {...props} width={width} height={height} alt={alt} style={style} />
-          </Component>
-        )}
+      {isNextImg ? (
+        <Component
+          className={wrapClassName}
+          style={{ position: 'relative', width: nextImgWidth, height: nextImgHeight }}
+        >
+          <Image src={src} {...props} width={width} height={height} alt={alt} style={style} />
+        </Component>
+      ) : (
+        <Component className={wrapClassName}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} {...props} width={width} height={height} alt={alt} style={style} />
+        </Component>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default UxImage
+export default UxImage;

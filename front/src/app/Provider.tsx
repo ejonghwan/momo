@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import * as React from 'react';
+import { useRouter } from 'next/navigation';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ export function Providers({ children }: ProvidersProps) {
             staleTime: 60 * 1000,
           },
         },
-      })
+      }),
   );
 
   return (
