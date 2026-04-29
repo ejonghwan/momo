@@ -1,4 +1,6 @@
-import { ElementType, HTMLAttributes } from 'react';
+'use client';
+
+import { ElementType, HTMLAttributes, useEffect } from 'react';
 
 import { cva, VariantProps } from 'class-variance-authority';
 
@@ -81,6 +83,14 @@ interface TextProps extends HTMLAttributes<HTMLElement>, VariantProps<typeof tex
 }
 
 export const UxText = ({ className, variant, size, as, children, ...props }: TextProps) => {
+  console.log('variant??', variant);
+
+  useEffect(() => {
+    if (variant === 'H_30_R') {
+      console.log('variantvariantvariantvariant');
+    }
+  }, []);
+
   const Component = as || 'span';
   return (
     <Component
