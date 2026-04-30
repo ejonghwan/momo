@@ -1,4 +1,6 @@
+import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
 import UserInfo from '@/components/style-ui/user/UserInfo';
+import { formatComma } from '@/utils/utils';
 
 const HomePage = () => {
   // const isLoggedIn = !!user; // 유저 정보가 있으면 true
@@ -13,7 +15,48 @@ const HomePage = () => {
 
   // const is = useIsMounted()
 
-  return <UserInfo />;
+  return (
+    <>
+      <UserInfo />
+      <ExpenseItemList
+        data={[
+          {
+            id: '1',
+            user_id: 'ho',
+            title: 'hooh',
+            memo: 'memo',
+            amount: formatComma(333333),
+            is_income: false,
+            category: 'how',
+            created_at: '2026-04-05',
+            updated_at: null,
+          },
+          {
+            id: '2',
+            user_id: 'ho',
+            title: 'hooh',
+            memo: 'memo',
+            amount: formatComma(333333),
+            is_income: false,
+            category: 'how',
+            created_at: '2026-04-05',
+            updated_at: null,
+          },
+          {
+            id: '3',
+            user_id: 'ho',
+            title: 'hooh',
+            memo: 'memo',
+            amount: formatComma(333333),
+            is_income: false,
+            category: 'how',
+            created_at: '2026-04-05',
+            updated_at: null,
+          },
+        ]}
+      />
+    </>
+  );
 };
 
 export default HomePage;
