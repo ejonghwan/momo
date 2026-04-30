@@ -1,8 +1,9 @@
 'use client';
 
+import React, { useState } from 'react';
+
 import ExpenseItem from '@/components/style-ui/expense/ExpenseItem';
 import { ExpenseItemType } from '@/types/expense/ExpenseType';
-import React, { useState } from 'react';
 
 interface Props {
   data: ExpenseItemType[];

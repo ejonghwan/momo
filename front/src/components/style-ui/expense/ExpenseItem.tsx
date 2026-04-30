@@ -1,7 +1,8 @@
 'use client';
 
-import { ExpenseItemType } from '@/types/expense/ExpenseType';
 import React, { useState } from 'react';
+
+import { ExpenseItemType } from '@/types/expense/ExpenseType';
 
 interface Props {
   item: ExpenseItemType;

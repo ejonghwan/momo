@@ -1,4 +1,8 @@
+'use client';
+import { useEffect } from 'react';
+
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
+import TestCompo2 from '@/components/style-ui/expense/TestCompo';
 import UserInfo from '@/components/style-ui/user/UserInfo';
 import { formatComma } from '@/utils/utils';
 
@@ -17,6 +21,7 @@ const HomePage = () => {
 
   return (
     <>
+      {/* <TestCompo2 /> */}
       <UserInfo />
       <ExpenseItemList
         data={[

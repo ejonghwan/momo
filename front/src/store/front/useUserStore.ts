@@ -1,11 +1,11 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
-import { User } from '@supabase/supabase-js'
+import { User } from '@supabase/supabase-js';
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface UserState {
-   user: User | null;
-   isInitialized: boolean;
-   setUser: (user: User | null) => void
+  user: User | null;
+  isInitialized: boolean;
+  setUser: (user: User | null) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -15,10 +15,9 @@ export const useUserStore = create<UserState>()(
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
     }),
-    { name: 'UserStore' } // 선택 사항: 데브툴에 표시될 이름
-  )
+    { name: 'UserStore' }, // 선택 사항: 데브툴에 표시될 이름
+  ),
 );
-
 
 /*
 **구글 로그인
