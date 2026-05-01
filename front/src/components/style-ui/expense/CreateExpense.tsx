@@ -7,14 +7,18 @@ import { CreateExpenseItemType, ExpenseItemType } from '@/types/expense/ExpenseT
 
 const CreateExpense = () => {
   const user = useUserStore((state) => state.user);
+
+  // 일반 지출
   const [createExpense, setCreateExpense] = useState<CreateExpenseItemType>({
     user_id: '',
     title: '',
-    memo: '',
+    description: '',
     amount: 0,
-    is_income: false,
+    transaction_type: 'out',
     category: [],
+    date: new Date().toISOString(), //기본값은 작성한 현재 시간
   });
+  // 자산이동은 다른 컴포넌트로 뺴야될듯 ?
 
   // form 작성
   const handleChangeExpense = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,8 +45,8 @@ const CreateExpense = () => {
     }
 
     // 라디오가 income, expense로 오니깐 분기처리
-    const val = value === 'expense' ? false : value === 'income' ? true : value;
-    setCreateExpense((prev) => ({ ...prev, [name]: val }));
+    // const val = value === 'expense' ? false : value === 'income' ? true : value;
+    setCreateExpense((prev) => ({ ...prev, [name]: value }));
   };
 
   // request insert
@@ -96,8 +100,8 @@ const CreateExpense = () => {
         <label htmlFor="memo">memo</label>
         <input
           type="text"
-          name="memo"
-          value={createExpense.memo}
+          name="description"
+          value={createExpense.description}
           onChange={(e) => handleChangeExpense(e)}
         />
         <br />
@@ -109,23 +113,33 @@ const CreateExpense = () => {
           onChange={(e) => handleChangeExpense(e)}
         />
         <br />
-        <label htmlFor="income">income 수입</label>
+        <label htmlFor="in">in 수입</label>
         <input
           type="radio"
-          id="income"
-          name="is_income"
-          value="income"
-          checked={createExpense.is_income}
+          id="in"
+          name="transaction_type"
+          value="in"
+          checked={createExpense.transaction_type === 'in'}
           onChange={(e) => handleChangeExpense(e)}
         />
         <br />
-        <label htmlFor="expense">expense 지출</label>
+        <label htmlFor="out">out 지출</label>
         <input
           type="radio"
-          id="expense"
-          name="is_income"
-          value="expense"
-          checked={!createExpense.is_income}
+          id="out"
+          name="transaction_type"
+          value="out"
+          checked={createExpense.transaction_type === 'out'}
+          onChange={(e) => handleChangeExpense(e)}
+        />
+        <br />
+        <label htmlFor="transfer">transfer 자산이동</label>
+        <input
+          type="radio"
+          id="transfer"
+          name="transaction_type"
+          value="transfer"
+          checked={createExpense.transaction_type === 'transfer'}
           onChange={(e) => handleChangeExpense(e)}
         />
         <br />
@@ -147,9 +161,15 @@ const CreateExpense = () => {
       </form>
       <div>
         <div>{createExpense.title}</div>
-        <div>{createExpense.memo}</div>
+        <div>{createExpense.description}</div>
         <div>{createExpense.amount}</div>
-        <div>{createExpense.is_income ? '수입' : '지출'}</div>
+        <div>
+          {createExpense.transaction_type === 'in'
+            ? '수입'
+            : createExpense.transaction_type === 'out'
+              ? '지출'
+              : '자산이동'}
+        </div>
         <div>{createExpense.category}</div>
       </div>
     </div>
