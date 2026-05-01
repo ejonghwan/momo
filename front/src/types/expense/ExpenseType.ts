@@ -5,7 +5,7 @@ export interface ExpenseItemType {
   description?: string; // 메모
   amount: number;
   transaction_type: 'in' | 'out' | 'transfer'; // 수입, 지출, 자산이동
-  category?: string[]; // 소비한 카테고리
+  categorys?: string[]; // 소비한 카테고리
   date: string;
 
   // 아래 4개는 나중에 구현하기
@@ -24,6 +24,6 @@ export interface CreateExpenseItemType {
   description?: string;
   amount: number;
   transaction_type: 'in' | 'out' | 'transfer';
-  category?: string[];
+  categorys?: string[];
   date: string;
 }

@@ -5,6 +5,7 @@ import CreateExpense from '@/components/style-ui/expense/CreateExpense';
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
 // import TestCompo2 from '@/components/style-ui/expense/TestCompo';
 import UserInfo from '@/components/style-ui/user/UserInfo';
+import { supabase } from '@/store/supabase/client';
 import { formatComma } from '@/utils/utils';
 
 const HomePage = () => {
@@ -20,47 +21,23 @@ const HomePage = () => {
 
   // const is = useIsMounted()
 
+  // 클라이언트 컴포넌트 내부
+  // useEffect(() => {
+  //   console.log('브라우저 전체 쿠키:', document.cookie);
+
+  //   const checkUser = async () => {
+  //     const { data } = await supabase.auth.getUser();
+  //     console.log('getUser 결과:', data.user);
+  //   };
+
+  //   checkUser();
+  // }, []);
+
   return (
     <>
       {/* <TestCompo2 /> */}
       <UserInfo />
-      <ExpenseItemList
-        data={[
-          {
-            id: '1',
-            user_id: 'ho',
-            title: 'hooh',
-            memo: 'memo',
-            amount: formatComma(333333),
-            is_income: false,
-            category: ['how'],
-            created_at: '2026-04-05',
-            updated_at: null,
-          },
-          {
-            id: '2',
-            user_id: 'ho',
-            title: 'hooh',
-            memo: 'memo',
-            amount: formatComma(333333),
-            is_income: false,
-            category: ['how'],
-            created_at: '2026-04-05',
-            updated_at: null,
-          },
-          {
-            id: '3',
-            user_id: 'ho',
-            title: 'hooh',
-            memo: 'memo',
-            amount: formatComma(333333),
-            is_income: false,
-            category: ['how'],
-            created_at: '2026-04-05',
-            updated_at: null,
-          },
-        ]}
-      />
+      {/* <ExpenseItemList /> */}
 
       <br />
       <br />

@@ -1,10 +1,28 @@
-'use client'
+'use client';
 
-import { createClient } from '@/store/supabase/client'
+import { useEffect } from 'react';
 
+import { supabase } from '@/store/supabase/client';
+
+// import { createBrowserClientFn } from '@/store/supabase/client';
 
 export default function LoginButton() {
-  const supabase = createClient()
+  // const supabase = createBrowserClientFn();
+
+  // useEffect(() => {
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange((event, session) => {
+  //     console.log('현재 인증 이벤트:', event);
+  //     console.log('현재 세션 정보:', session);
+
+  //     if (event === 'SIGNED_IN') {
+  //       // 여기서 세션이 들어오는지 확인!
+  //     }
+  //   });
+
+  //   return () => subscription.unsubscribe();
+  // }, []);
 
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
@@ -17,14 +35,8 @@ export default function LoginButton() {
           prompt: 'consent',
         },
       },
-    })
-  }
+    });
+  };
 
-  return (
-    <button
-      onClick={handleGoogleLogin}
-    >
-      구글로 로그인
-    </button>
-  )
+  return <button onClick={handleGoogleLogin}>구글로 로그인</button>;
 }

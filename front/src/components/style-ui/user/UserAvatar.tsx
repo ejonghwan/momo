@@ -1,4 +1,5 @@
 import React, { StyleHTMLAttributes } from 'react';
+
 import UxImage from '@/components/style-ui/common/UxImage';
 
 interface AvatarProps {
@@ -14,7 +15,7 @@ const UserAvatar = ({
   nextImgHeight = '30rem',
   style,
 }: AvatarProps) => {
-  console.log('avatartUrl??', avatartUrl);
+  // console.log('avatartUrl??', avatartUrl);
 
   return (
     <UxImage

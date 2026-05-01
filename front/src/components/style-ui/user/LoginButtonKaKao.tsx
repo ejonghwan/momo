@@ -1,10 +1,11 @@
-'use client'
+'use client';
 
-import { createClient } from '@/store/supabase/client'
+import { supabase } from '@/store/supabase/client';
 
+// import { createBrowserClientFn } from '@/store/supabase/client';
 
 export default function LoginButton() {
-  const supabase = createClient()
+  // const supabase = createBrowserClientFn();
 
   const handleKakaoLogin = async () => {
     await supabase.auth.signInWithOAuth({
@@ -17,14 +18,8 @@ export default function LoginButton() {
         //   prompt: 'consent',
         // },
       },
-    })
-  }
+    });
+  };
 
-  return (
-    <button
-      onClick={handleKakaoLogin}
-    >
-      카카오로 로그인
-    </button>
-  )
+  return <button onClick={handleKakaoLogin}>카카오로 로그인</button>;
 }

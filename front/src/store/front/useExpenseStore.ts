@@ -8,6 +8,7 @@ interface ExpenseState {
   expense: ExpenseItemType[];
   isInitialized: boolean;
   setExpense: (expense: ExpenseItemType[]) => void;
+  addExpense: (newExpense: ExpenseItemType) => void;
   updateExpense: (expense: ExpenseItemType) => void;
   removeExpense: (id: string) => void;
 }
