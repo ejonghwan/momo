@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { supabase } from '@/store/supabase/client';
+import { supabaseClient } from '@/store/supabase/client';
 
 // import { createBrowserClientFn } from '@/store/supabase/client';
 
@@ -25,7 +25,7 @@ export default function LoginButton() {
   // }, []);
 
   const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
       options: {
         // 인증 후 돌아올 주소 (중요!)

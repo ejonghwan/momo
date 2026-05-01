@@ -1,6 +1,6 @@
 'use client';
 
-import { supabase } from '@/store/supabase/client';
+import { supabaseClient } from '@/store/supabase/client';
 
 // import { createBrowserClientFn } from '@/store/supabase/client';
 
@@ -8,7 +8,7 @@ export default function LoginButton() {
   // const supabase = createBrowserClientFn();
 
   const handleKakaoLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    await supabaseClient.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
         // 인증 후 돌아올 우리 서비스의 callback 주소

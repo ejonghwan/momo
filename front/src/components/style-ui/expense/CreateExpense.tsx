@@ -4,7 +4,8 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
-import { supabase } from '@/store/supabase/client';
+import { supabaseClient } from '@/store/supabase/client';
+import { supabase } from '@/store/supabase/supabase';
 // import { supabase } from '@/store/supabase/client';
 import { CreateExpenseItemType, ExpenseItemType } from '@/types/expense/ExpenseType';
 
@@ -76,7 +77,7 @@ const CreateExpense = () => {
     console.log('payload???????', payload);
 
     // const { data, error } = await supabase.from('expense').insert(payload).select();
-    const { data, error } = await supabase.from('expense').insert(payload).select();
+    const { data, error } = await supabaseClient.from('expense').insert(payload).select();
 
     console.log('data???????', data);
 
