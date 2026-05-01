@@ -5,7 +5,7 @@ import { ExpenseItemType } from '@/types/expense/ExpenseType';
 // import { User } from '@supabase/supabase-js';
 
 interface ExpenseState {
-  expense: ExpenseItemType[] | null;
+  expense: ExpenseItemType[];
   isInitialized: boolean;
   setExpense: (expense: ExpenseItemType[]) => void;
   updateExpense: (expense: ExpenseItemType) => void;
@@ -19,7 +19,14 @@ export const useExpenseStore = create<ExpenseState>()(
       isInitialized: false,
       setExpense: (expense) => set({ expense, isInitialized: true }),
 
-      // createExpense: (newExpense: ExpenseItemType) => set((state) => {})
+      // createExpense: (newExpense: ExpenseItemType) => set((state) => {
+      //   return
+      // })
+
+      addExpense: (newExpense: ExpenseItemType) =>
+        set((state) => ({
+          expense: [newExpense, ...state.expense],
+        })),
 
       updateExpense: (updatedItem: ExpenseItemType) =>
         set((state) => ({

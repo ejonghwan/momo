@@ -1,8 +1,9 @@
 'use client';
 import { useEffect } from 'react';
 
+import CreateExpense from '@/components/style-ui/expense/CreateExpense';
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
-import TestCompo2 from '@/components/style-ui/expense/TestCompo';
+// import TestCompo2 from '@/components/style-ui/expense/TestCompo';
 import UserInfo from '@/components/style-ui/user/UserInfo';
 import { formatComma } from '@/utils/utils';
 
@@ -32,7 +33,7 @@ const HomePage = () => {
             memo: 'memo',
             amount: formatComma(333333),
             is_income: false,
-            category: 'how',
+            category: ['how'],
             created_at: '2026-04-05',
             updated_at: null,
           },
@@ -43,7 +44,7 @@ const HomePage = () => {
             memo: 'memo',
             amount: formatComma(333333),
             is_income: false,
-            category: 'how',
+            category: ['how'],
             created_at: '2026-04-05',
             updated_at: null,
           },
@@ -54,12 +55,17 @@ const HomePage = () => {
             memo: 'memo',
             amount: formatComma(333333),
             is_income: false,
-            category: 'how',
+            category: ['how'],
             created_at: '2026-04-05',
             updated_at: null,
           },
         ]}
       />
+
+      <br />
+      <br />
+      <h3>create</h3>
+      <CreateExpense />
     </>
   );
 };
