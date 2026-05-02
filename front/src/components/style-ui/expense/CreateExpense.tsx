@@ -2,13 +2,13 @@
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
+import { format } from 'date-fns';
+
 import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
-import { supabase } from '@/store/supabase/supabase';
-// import { supabase } from '@/store/supabase/client';
-import { CreateExpenseItemType, ExpenseItemType } from '@/types/expense/ExpenseType';
+import { CreateExpenseItemType } from '@/types/expense/ExpenseType';
 
 const CreateExpense = () => {
   const user = useUserStore((state) => state.user);
@@ -22,7 +22,7 @@ const CreateExpense = () => {
     amount: 0,
     transaction_type: 'out',
     categorys: [],
-    date: '2026-05-02T15:28:03.611+00:00', // 사용한 날짜 시간
+    date: format(new Date(), 'yyyy-MM-dd'), // 사용한 날짜 시간
     // created_at은 글을 작성한 시간
   });
   // 자산이동은 다른 컴포넌트로 뺴야될듯 ?
@@ -30,7 +30,7 @@ const CreateExpense = () => {
   // form 작성
   const handleChangeExpense = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
-    const { name, value, type, checked } = e.target;
+    const { name, value, checked } = e.target;
 
     // 카테고리(배열)인 경우 특수 처리
     if (name === 'categorys') {
@@ -60,15 +60,6 @@ const CreateExpense = () => {
   const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const {
-    //   data: { user },
-    // } = await supabase.auth.getUser();
-    // console.log('현재 로그인 유저:', user);
-
-    // if (!user) {
-    //   console.error('로그인 세션이 없습니다! 401 에러의 원인입니다.');
-    // }
-
     if (!user?.id) return alert('로그인 정보가 없습니다.');
 
     const payload = {
@@ -76,12 +67,7 @@ const CreateExpense = () => {
       user_id: user.id,
     };
 
-    console.log('payload???????', payload);
-
-    // const { data, error } = await supabase.from('expense').insert(payload).select();
     const { data, error } = await supabaseClient.from('expense').insert(payload).select();
-
-    console.log('data???????', data);
 
     if (!error && data) {
       addExpense(data[0]);
@@ -92,7 +78,7 @@ const CreateExpense = () => {
         amount: 0,
         transaction_type: 'out',
         categorys: [],
-        date: new Date().toISOString(),
+        date: format(new Date(), 'yyyy-MM-dd'),
       });
       alert('저장 완료!');
     }
@@ -106,9 +92,6 @@ const CreateExpense = () => {
   // 렌더링 완 -> useEffect 실행 -> setState -> 재렌더링 -> 리액트(무한렌더링??)
 
   const categories = ['식비', '교통비', '쇼핑', '의료비', '교육', '통신', '기타'];
-
-  // test
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   return (
     <div>
@@ -166,9 +149,17 @@ const CreateExpense = () => {
           // onChange={(e) => handleChangeExpense(e)}
         /> */}
         <div style={{ textAlign: 'center' }}>
-          <UxDatePicker date={selectedDate} onChange={setSelectedDate} />
+          <UxDatePicker
+            date={new Date(createExpense.date)}
+            onChange={(time) =>
+              setCreateExpense((prev) => ({
+                ...prev,
+                date: format(time ? format(new Date(time), 'yyyy-MM-dd') : '', 'yyyy-MM-dd'),
+              }))
+            }
+          />
         </div>
-        <p>선택된 날짜: {selectedDate?.toLocaleDateString()}</p>
+        {/* <p>선택된 날짜: {selectedDate?.toLocaleDateString()}</p> */}
 
         <br />
         <label htmlFor="transfer">transfer 자산이동</label>
@@ -211,6 +202,7 @@ const CreateExpense = () => {
               : '자산이동'}
         </div>
         <div>{createExpense.categorys}</div>
+        <div>{createExpense.date}</div>
       </div>
     </div>
   );

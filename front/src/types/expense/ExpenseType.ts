@@ -27,3 +27,13 @@ export interface CreateExpenseItemType {
   categorys?: string[];
   date: string;
 }
+
+export interface UpdateExpenseItemType {
+  user_id: string;
+  title: string;
+  description?: string;
+  amount: number;
+  transaction_type: 'in' | 'out' | 'transfer';
+  categorys?: string[];
+  date: string;
+}

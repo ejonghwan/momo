@@ -7,12 +7,17 @@ import React, {
   useState,
 } from 'react';
 
-import { error } from 'console';
+import { format } from 'date-fns';
 
+import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
-import { CreateExpenseItemType, ExpenseItemType } from '@/types/expense/ExpenseType';
+import {
+  CreateExpenseItemType,
+  ExpenseItemType,
+  UpdateExpenseItemType,
+} from '@/types/expense/ExpenseType';
 
 interface Props {
   item: ExpenseItemType;
@@ -23,14 +28,15 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   const user = useUserStore((state) => state.user);
   const updateExpense = useExpenseStore((state) => state.updateExpense);
 
-  const [updateExpenseData, setUpdateExpenseData] = useState<CreateExpenseItemType>({
+  // const [selectedDate, setSelectedDate] = useState<Date | null>(item.date);
+  const [updateExpenseData, setUpdateExpenseData] = useState<UpdateExpenseItemType>({
     user_id: item.user_id,
     title: item.title,
     description: item.description,
     amount: item.amount,
     transaction_type: item.transaction_type,
     categorys: item.categorys,
-    date: item.date, //이거 create랑 update 수정해야됨
+    date: format(new Date(item.date), 'yyyy-MM-dd'), // api load 시 string, 변경 컴포넌트에서는 Date type
   });
 
   // form 작성
@@ -67,10 +73,9 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
 
     if (!user?.id) return alert('로그인 정보가 없습니다.');
 
-    console.log('item????????', item);
+    // console.log('item????????', item);
 
     const changedFields: Partial<CreateExpenseItemType> = {};
-
     (Object.keys(updateExpenseData) as Array<keyof CreateExpenseItemType>).forEach((key) => {
       // if (['id', 'user_id', 'created_at'].includes(key)) return;
       if (updateExpenseData[key] !== item[key]) {
@@ -78,7 +83,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
       }
     });
 
-    console.log('변경됨??', changedFields);
+    // console.log('변경됨??', changedFields);
     if (Object.keys(changedFields).length === 0) {
       alert('변경사항이 없습니다.');
       return;
@@ -110,9 +115,14 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   };
 
   const handleCancel = () => {
-    console.log('handleCancel???');
+    // console.log('handleCancel???');
     setIsEdit((prev) => !prev);
   };
+
+  // const handleChangeDate = (time: Date | null) => {
+  //   setSelectedDate(time);
+  //   setUpdateExpenseData((prev) => ({ ...prev, date: time }));
+  // };
 
   useEffect(() => {
     console.log('updateExpenseData??', updateExpenseData);
@@ -180,7 +190,19 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
           onChange={(e) => handleChangeExpense(e)}
         />
         <br />
-        <label htmlFor="categorys">title</label>
+        <div style={{ textAlign: 'center' }}>
+          <UxDatePicker
+            date={updateExpenseData.date}
+            onChange={(time) =>
+              setUpdateExpenseData((prev) => ({
+                ...prev,
+                date: format(time ? format(new Date(time), 'yyyy-MM-dd') : '', 'yyyy-MM-dd'),
+              }))
+            }
+          />
+        </div>
+        <br />
+        <label htmlFor="categorys">category</label>
         {categories.map((cat) => (
           <label key={cat} style={{ marginRight: '8px' }}>
             <input
@@ -193,9 +215,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
             {cat}
           </label>
         ))}
-
         <br />
-
         <button type="button" onClick={handleCancel}>
           cancel
         </button>

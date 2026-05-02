@@ -21,6 +21,8 @@ const ExpenseItem = ({ item }: Props) => {
     console.log('delete?', id);
   };
 
+  console.log('list item ?? item?????????', item);
+
   return (
     <div>
       {isEdit ? (
@@ -49,11 +51,12 @@ const ExpenseItem = ({ item }: Props) => {
           <br />
           <span>category: {item.categorys?.map((item) => item)}</span>
           <br />
-          <span>{item.created_at}</span>
+          <span>생성일:{item.created_at}</span>
           <br />
-          <span>{item.updated_at !== item.created_at ? '수정됨' : '널'}</span>
+          <span>수정일:{item.updated_at !== item.created_at ? '수정됨' : '널'}</span>
           <br />
-
+          <span>돈쓴날:{item.date}</span>
+          <br />
           <button type="button" onClick={(e) => handleExpenseUpdate(e, item.id)}>
             수정
           </button>
