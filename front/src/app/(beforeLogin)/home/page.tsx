@@ -1,6 +1,6 @@
 import CreateExpense from '@/components/style-ui/expense/CreateExpense';
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
-import LoadExpense from '@/components/style-ui/expense/LoadExpense';
+// import LoadExpense from '@/components/style-ui/expense/LoadExpense';
 // import TestCompo2 from '@/components/style-ui/expense/TestCompo';
 import UserInfo from '@/components/style-ui/user/UserInfo';
 import { supabaseServer } from '@/store/supabase/server';
@@ -40,13 +40,13 @@ const HomePage = async () => {
   //   return;
   // }
 
-  const { data, error } = await supabase
-    .from('expense')
-    .select('*')
-    .eq('user_id', user?.id) // 내 데이터만
-    .order('created_at', { ascending: false }); // 최신순 정렬
+  // const { data, error } = await supabase
+  //   .from('expense')
+  //   .select('*')
+  //   .eq('user_id', user?.id) // 내 데이터만
+  //   .order('created_at', { ascending: false }); // 최신순 정렬
 
-  console.log('data?', data, user);
+  // console.log('data?', data, user);
 
   return (
     <>
@@ -61,7 +61,7 @@ const HomePage = async () => {
       <br />
       <br />
       <h3>load</h3>
-      <LoadExpense data={data} />
+      <ExpenseItemList />
     </>
   );
 };
