@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
+import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
@@ -21,7 +22,8 @@ const CreateExpense = () => {
     amount: 0,
     transaction_type: 'out',
     categorys: [],
-    date: new Date().toISOString(), //기본값은 작성한 현재 시간
+    date: '2026-05-02T15:28:03.611+00:00', // 사용한 날짜 시간
+    // created_at은 글을 작성한 시간
   });
   // 자산이동은 다른 컴포넌트로 뺴야될듯 ?
 
@@ -105,6 +107,9 @@ const CreateExpense = () => {
 
   const categories = ['식비', '교통비', '쇼핑', '의료비', '교육', '통신', '기타'];
 
+  // test
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
   return (
     <div>
       <form action="" onSubmit={(e) => handleSubmitExpense(e)}>
@@ -151,6 +156,20 @@ const CreateExpense = () => {
           checked={createExpense.transaction_type === 'out'}
           onChange={(e) => handleChangeExpense(e)}
         />
+        <br />
+        <label>사용날짜</label>
+        {/* <input
+          type="date"
+          id="date"
+          name="date"
+          // checked={createExpense.transaction_type === 'out'}
+          // onChange={(e) => handleChangeExpense(e)}
+        /> */}
+        <div style={{ textAlign: 'center' }}>
+          <UxDatePicker date={selectedDate} onChange={setSelectedDate} />
+        </div>
+        <p>선택된 날짜: {selectedDate?.toLocaleDateString()}</p>
+
         <br />
         <label htmlFor="transfer">transfer 자산이동</label>
         <input

@@ -2,6 +2,7 @@
 @use '@/styles/helper/mixins' as *;
 @use '@/styles/helper/variables' as *;
 @use '@/styles/base/bgColor.scss';
+@use '@/styles/base/_datePicker.scss'; // 데이트피커 라이브러리 초기화
 
 :root {
   /* ## Grey */

@@ -61,7 +61,13 @@ export const useExpenseStore = create<ExpenseState>()(
 
       updateExpense: (updatedItem: ExpenseItemType) =>
         set((state) => ({
-          expense: state.expense?.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
+          expense: state.expense?.map((item) => {
+            // 🚨 핵심 포인트: item이 존재할 때만 id를 비교합니다.
+            // if (!item || !item.id) return item;
+            console.log('stroe?????????????', item, state.expense, updatedItem);
+
+            return item.id === updatedItem.id ? updatedItem : item;
+          }),
         })),
 
       // state는 스토어 전체

@@ -1,17 +1,19 @@
-import type { Metadata } from "next";
-import { fontDefault } from "@/lib/ui/fonts";
-import { Providers } from "@/app/Provider";
-import DeviceTypeLayout from "@/utils/device-type-layout";
+import type { Metadata } from 'next';
+
+import { Providers } from '@/app/Provider';
+import AuthProvider from '@/components/auth/AuthProvider';
+import { fontDefault } from '@/lib/ui/fonts';
+import { getCookieStore } from '@/store/supabase/supabase';
+import DeviceTypeLayout from '@/utils/device-type-layout';
+
 // import "@/styles/base/reset.scss";
-import "@/styles/base/global.scss";
-import AuthProvider from "@/components/auth/AuthProvider";
-import { getCookieStore } from '@/store/supabase/supabase'
+import '@/styles/base/global.scss';
 
 export const metadata: Metadata = {
-  title: "aatt",
-  description: "zzz",
+  title: 'aatt',
+  description: 'zzz',
   icons: {
-    icon: "@/public/favicon.ico",
+    icon: '@/public/favicon.ico',
   },
 };
 
@@ -20,10 +22,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   const supabase = await getCookieStore();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   return (
     <html lang="ko" className={`${fontDefault.variable}`}>
@@ -37,9 +39,6 @@ export default async function RootLayout({
     </html>
   );
 }
-
-
-
 
 // import { Metadata, Viewport } from "next";
 // import { Providers } from "./providers";

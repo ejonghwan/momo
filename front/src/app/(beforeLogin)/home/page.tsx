@@ -3,7 +3,7 @@ import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
 // import LoadExpense from '@/components/style-ui/expense/LoadExpense';
 // import TestCompo2 from '@/components/style-ui/expense/TestCompo';
 import UserInfo from '@/components/style-ui/user/UserInfo';
-import { supabaseServer } from '@/store/supabase/server';
+// import { supabaseServer } from '@/store/supabase/server';
 
 const HomePage = async () => {
   // const isLoggedIn = !!user; // 유저 정보가 있으면 true
@@ -30,10 +30,10 @@ const HomePage = async () => {
   //   checkUser();
   // }, []);
 
-  const supabase = await supabaseServer();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const supabase = await supabaseServer();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
 
   // if (!user) {
   //   console.warn('로그인한 유저가 없습니다.');
