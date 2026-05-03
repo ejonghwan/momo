@@ -1,4 +1,4 @@
-import React, { StyleHTMLAttributes } from 'react';
+import React from 'react';
 
 import UxImage from '@/components/style-ui/common/UxImage';
 

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { supabaseClient } from '@/store/supabase/client';
 
 // import { createBrowserClientFn } from '@/store/supabase/client';

@@ -308,10 +308,11 @@ export const getRelativeTime = (dateString: string): string => {
 };
 
 /**
- * 숫자를 3자리마다 콤마가 찍힌 문자열로 변환합니다.
+ * 숫자를 3자리마다 콤마가 찍힌 문자열로 변환
  * @param value 숫자 또는 숫자 형태의 문자열
  */
-export const formatComma = (value: number | string): string | number => {
+export const formatComma = (value: number | string | undefined): string | number => {
+  if (!value) return '';
   const num = typeof value === 'string' ? Number(value) : value;
 
   // 숫자가 아니면 빈 문자열이나 0을 반환하도록 예외 처리
@@ -319,4 +320,14 @@ export const formatComma = (value: number | string): string | number => {
 
   // return Number(new Intl.NumberFormat('ko-KR').format(num));
   return new Intl.NumberFormat('ko-KR').format(num);
+};
+
+/**
+ *  랜덤 키 생성
+ */
+export const generateId = () => {
+  if (typeof window !== 'undefined' && window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
 };

@@ -1,24 +1,16 @@
-import React, {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+'use client';
+
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useCallback, useState } from 'react';
 
 import { format } from 'date-fns';
 
 import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
+import { DEFAULT_CATEGORIES } from '@/constants/category';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
-import {
-  CreateExpenseItemType,
-  ExpenseItemType,
-  UpdateExpenseItemType,
-} from '@/types/expense/ExpenseType';
+import { ExpenseItemType, UpdateExpenseItemType } from '@/types/expense/ExpenseType';
+import { Categorys } from '@/types/user/UserType';
 
 interface Props {
   item: ExpenseItemType;
@@ -29,7 +21,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   const user = useUserStore((state) => state.user);
   const updateExpense = useExpenseStore((state) => state.updateExpense);
 
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(item.date);
+  
   const [updateExpenseData, setUpdateExpenseData] = useState<UpdateExpenseItemType>({
     user_id: item.user_id,
     title: item.title,
@@ -37,54 +29,112 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     amount: item.amount,
     transaction_type: item.transaction_type,
     categorys: item.categorys,
-    date: format(new Date(item.date), 'yyyy-MM-dd'), // api load 시 string, 변경 컴포넌트에서는 Date type
+    date: format(new Date(item.date), 'yyyy-MM-dd'),
   });
 
-  // form 작성
+  // 기타 입력을 위한 상태 추가
+  const [categoryValue, setCategoryValue] = useState<string>('');
+  const [categories, setCategories] = useState<Categorys[]>(() => {
+    // props로 카테고리
+    const itemCats = (item.categorys as Categorys[]) || [];
+
+    // 기본카테고리 중복체크
+    const defaultIds = new Set(DEFAULT_CATEGORIES.map((c) => c.id));
+
+    // db에서 온거중 기본 목록에 없는 기타만 필터링
+    const customCats = itemCats.filter((c) => !defaultIds.has(c.id));
+
+    // 기본값 + 커스텀값 합쳐서 초기 상태로 설정. 한 번만 실행
+    return [...DEFAULT_CATEGORIES, ...customCats];
+  });
+
   const handleChangeExpense = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.target.value);
     const { name, value, checked } = e.target;
 
-    // 카테고리(배열)인 경우 특수 처리
     if (name === 'categorys') {
+      const catName = e.target.dataset.name || '';
       setUpdateExpenseData((prev) => {
-        const currentCategories = prev.categorys || [];
+        const currentCategories = (prev.categorys as Categorys[]) || [];
 
         if (checked) {
-          return { ...prev, categorys: [...currentCategories, value] }; // 체크됨: 배열에 추가
+          const newCategory: Categorys = {
+            id: value,
+            name: catName,
+            default: false,
+          };
+          return { ...prev, categorys: [...currentCategories, newCategory] };
         } else {
           return {
-            // 체크 해제됨: 배열에서 제거
             ...prev,
-            categorys: currentCategories.filter((cat) => cat !== value),
+            categorys: currentCategories.filter((cat) => cat.id !== value),
           };
         }
       });
       return;
     }
 
-    // 라디오가 income, expense로 오니깐 분기처리
-    // const val = value === 'expense' ? false : value === 'income' ? true : value;
-    setUpdateExpenseData((prev) => ({ ...prev, [name]: value }));
+    const finalValue = name === 'amount' ? Number(value) : value;
+    setUpdateExpenseData((prev) => ({ ...prev, [name]: finalValue }));
   }, []);
 
-  // request insert
+  // 기타 카테고리 추가 로직
+  const handleClickAddCategory = () => {
+    if (!categoryValue.trim()) return alert('카테고리명을 입력해주세요.');
+    if (categories.some((c) => c.name === categoryValue))
+      return alert('이미 존재하는 카테고리입니다.');
+
+    const newCat: Categorys = {
+      id: `custom_${Date.now()}`,
+      name: categoryValue,
+      default: false,
+    };
+
+    setCategories((prev) => [...prev, newCat]);
+
+    // 현재 수정 중인 데이터에도 즉시 추가 (체크 상태)
+    setUpdateExpenseData((prev) => ({
+      ...prev,
+      categorys: [...((prev.categorys as Categorys[]) || []), newCat],
+    }));
+    setCategoryValue('');
+  };
+
   const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!user?.id) return alert('로그인 정보가 없습니다.');
 
-    // console.log('item????????', item);
-
-    const changedFields: Partial<CreateExpenseItemType> = {};
-    (Object.keys(updateExpenseData) as Array<keyof CreateExpenseItemType>).forEach((key) => {
-      // if (['id', 'user_id', 'created_at'].includes(key)) return;
-      if (updateExpenseData[key] !== item[key]) {
-        (changedFields as any)[key] = updateExpenseData[key]; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const changedFields: Partial<UpdateExpenseItemType> = {};
+    (Object.keys(updateExpenseData) as Array<keyof UpdateExpenseItemType>).forEach((key) => {
+      const newValue = updateExpenseData[key];
+      const oldValue = item[key as keyof ExpenseItemType];
+    
+      // 비교
+      if (Array.isArray(newValue)) {
+        if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          changedFields[key] = newValue as any;
+        }
+      } 
+      // 날짜만 예외 비교 처리
+      else if (key === 'date') {
+        // DB의 긴 문자열과 state의 짧은 문자열을 모두 yyyy-MM-dd로 통일해서 비교
+        const formattedNew = format(new Date(newValue as string), 'yyyy-MM-dd');
+        const formattedOld = format(new Date(oldValue as string), 'yyyy-MM-dd');
+    
+        if (formattedNew !== formattedOld) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          changedFields[key] = newValue as any;
+        }
+      }
+      // 나머지 비교
+      else if (newValue !== oldValue) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        changedFields[key] = newValue as any;
       }
     });
 
-    // console.log('변경됨??', changedFields);
+    console.log('changedFields???', changedFields)
+
     if (Object.keys(changedFields).length === 0) {
       alert('변경사항이 없습니다.');
       return;
@@ -98,7 +148,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
 
     const { data, error } = await supabaseClient
       .from('expense')
-      .update(payload) // 딱 바뀐 필드만 객체로 전달
+      .update(payload)
       .eq('id', item?.id)
       .select()
       .single();
@@ -110,114 +160,107 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
 
     if (data) {
       updateExpense(data);
-      alert('저장 완료!');
-      setIsEdit((prev) => !prev);
+      alert('수정 완료!');
+      setIsEdit(false);
     }
   };
 
-  const handleCancel = () => {
-    // console.log('handleCancel???');
-    setIsEdit((prev) => !prev);
-  };
-
-  // const handleChangeDate = (time: Date | null) => {
-  //   setSelectedDate(time);
-  //   setUpdateExpenseData((prev) => ({ ...prev, date: time }));
-  // };
-
-  useEffect(() => {
-    console.log('updateExpenseData??', updateExpenseData);
-  }, [updateExpenseData]);
-
-  // useEffect에선 setSTate 사용시
-  // 렌더링 완 -> useEffect 실행 -> setState -> 재렌더링 -> 리액트(무한렌더링??)
-
-  const categories = ['식비', '교통비', '쇼핑', '의료비', '교육', '통신', '기타'];
-
   return (
     <div>
-      <form action="" onSubmit={(e) => handleSubmitExpense(e)}>
-        <label htmlFor="title">title</label>
+      <form onSubmit={handleSubmitExpense}>
+        <label>제목</label>
         <input
           type="text"
           name="title"
           value={updateExpenseData.title}
-          onChange={(e) => handleChangeExpense(e)}
+          onChange={handleChangeExpense}
         />
         <br />
-        <label htmlFor="memo">memo</label>
+        <label>메모</label>
         <input
           type="text"
           name="description"
           value={updateExpenseData.description}
-          onChange={(e) => handleChangeExpense(e)}
+          onChange={handleChangeExpense}
         />
         <br />
-        <label htmlFor="amount">amount</label>
+        <label>금액</label>
         <input
           type="number"
           name="amount"
           value={updateExpenseData.amount}
-          onChange={(e) => handleChangeExpense(e)}
+          onChange={handleChangeExpense}
         />
         <br />
-        <label htmlFor="in">in 수입</label>
+        <label>유형: </label>
         <input
           type="radio"
-          id="in"
           name="transaction_type"
           value="in"
           checked={updateExpenseData.transaction_type === 'in'}
-          onChange={(e) => handleChangeExpense(e)}
-        />
-        <br />
-        <label htmlFor="out">out 지출</label>
+          onChange={handleChangeExpense}
+        />{' '}
+        수입
         <input
           type="radio"
-          id="out"
           name="transaction_type"
           value="out"
           checked={updateExpenseData.transaction_type === 'out'}
-          onChange={(e) => handleChangeExpense(e)}
-        />
-        <br />
-        <label htmlFor="transfer">transfer 자산이동</label>
+          onChange={handleChangeExpense}
+        />{' '}
+        지출
         <input
           type="radio"
-          id="transfer"
           name="transaction_type"
           value="transfer"
           checked={updateExpenseData.transaction_type === 'transfer'}
-          onChange={(e) => handleChangeExpense(e)}
-        />
-        <br />
-        <div style={{ textAlign: 'center' }}>
+          onChange={handleChangeExpense}
+        />{' '}
+        자산이동
+        <div style={{ margin: '20px 0' }}>
           <UxDatePicker
-            date={updateExpenseData.date}
+            date={new Date(updateExpenseData.date)}
             onChange={(time) =>
               setUpdateExpenseData((prev) => ({
                 ...prev,
-                date: format(time ? format(new Date(time), 'yyyy-MM-dd') : '', 'yyyy-MM-dd'),
+                date: time
+                  ? format(new Date(time), 'yyyy-MM-dd')
+                  : format(new Date(), 'yyyy-MM-dd'),
               }))
             }
           />
         </div>
-        <br />
-        <label htmlFor="categorys">category</label>
+        <label>카테고리</label>
         {categories.map((cat) => (
-          <label key={cat} style={{ marginRight: '8px' }}>
+          <label key={cat.id} style={{ marginRight: '8px' }}>
             <input
               type="checkbox"
               name="categorys"
-              value={cat} // 이 값이 배열에 들어감
-              checked={updateExpenseData.categorys?.includes(cat)} // 배열에 있으면 체크 상태
-              onChange={(e) => handleChangeExpense(e)}
+              value={cat.id}
+              data-name={cat.name}
+              checked={(updateExpenseData.categorys as Categorys[])?.some((c) => c.id === cat.id)}
+              onChange={handleChangeExpense}
             />
-            {cat}
+            {cat.name}
           </label>
         ))}
+        {/* 기타 카테고리 추가 UI */}
+        <div>
+          <input
+            type="text"
+            value={categoryValue}
+            placeholder="기타 카테고리 직접 입력"
+            onChange={(e) => setCategoryValue(e.target.value)}
+          />
+          <button type="button" onClick={handleClickAddCategory}>
+            추가
+          </button>
+        </div>
+        <p style={{ fontSize: '12px', color: '#666' }}>
+          ※ 개인정보 수정 &gt; 카테고리추가에서 관리할 수 있습니다
+        </p>
         <br />
-        <button type="button" onClick={handleCancel}>
+        <button type="button" onClick={() => setIsEdit(false)}>
           cancel
         </button>
         <button type="submit">update!!</button>

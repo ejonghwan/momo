@@ -19,10 +19,6 @@ const ExpenseItem = ({ item }: Props) => {
     setIsEdit((prev) => !prev);
   };
 
-  const handleExpenseDelete = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
-    console.log('delete?', id);
-  };
-
   console.log('list item ?? item?????????', item);
 
   return (
@@ -51,7 +47,12 @@ const ExpenseItem = ({ item }: Props) => {
                 : '자산이동'}
           </span>
           <br />
-          <span>category: {item.categorys?.map((item) => item)}</span>
+          <span>
+            category:
+            {item.categorys?.map((cat, key) => (
+              <span key={key}>{cat.name}</span>
+            ))}
+          </span>
           <br />
           <span>생성일:{item.created_at}</span>
           <br />
@@ -62,9 +63,6 @@ const ExpenseItem = ({ item }: Props) => {
           <button type="button" onClick={(e) => handleExpenseUpdate(e, item.id)}>
             수정
           </button>
-          {/* <button type="button" onClick={(e) => handleExpenseDelete(e, item.id)}>
-            삭제
-          </button> */}
           <DeleteExpense id={item.id} />
           <br />
           <br />

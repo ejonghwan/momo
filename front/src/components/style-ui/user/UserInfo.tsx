@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-
 import clsx from 'clsx';
 
 import LoginButton from '@/components/style-ui/user/LoginButton';
 import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
 import UserAvatar from '@/components/style-ui/user/UserAvatar';
-import UserInfoEdit from '@/components/style-ui/user/UserInfoEdit';
+import UserInfoSelfCategory from '@/components/style-ui/user/UserInfoSelfCategory';
 import { useUserStore } from '@/store/front/useUserStore';
+
+import UserInfoAssets from './UserInfoAssets';
+import UserInfoDefaultAssets from './UserInfoDefaultAssets';
 
 import style from '@/styles/components/user/UserInfo.module.scss';
 
@@ -17,7 +18,6 @@ const UserInfo = () => {
   const user = useUserStore((state) => state.user);
   const profile = useUserStore((state) => state.profile);
   const isInitialized = useUserStore((state) => state.isInitialized);
-  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   if (!isInitialized) {
     return (
@@ -69,28 +69,13 @@ const UserInfo = () => {
               {profile?.nickname ? profile?.nickname : <button type="button">닉네임 설정</button>}
             </div>
             <div>
-              셀프 카테고리 :
-              {profile?.self_categorys ? (
-                profile?.self_categorys
-              ) : (
-                <button type="button">자주사용하는 카테고리 설정하기</button>
-              )}
+              셀프 카테고리 : <UserInfoSelfCategory categorys={profile?.self_categorys} />
             </div>
             <div>
-              카드 or 계좌들 :
-              {profile?.assets ? (
-                profile?.assets
-              ) : (
-                <button type="button">카드/계좌 등록하기</button>
-              )}
+              카드 or 계좌들 : <UserInfoAssets assets={profile?.assets} />
             </div>
             <div>
-              디폴트 asset :
-              {profile?.default_asset ? (
-                profile?.default_asset
-              ) : (
-                <button type="button">기본 카드/계좌 등록하기</button>
-              )}
+              디폴트 : <UserInfoDefaultAssets defalutAssets={profile?.default_asset} />
             </div>
 
             <br />
@@ -99,11 +84,6 @@ const UserInfo = () => {
             <div>개인정보 수정일 : {profile?.updated_at}</div>
           </div>
         )}
-        <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
-          정보 수정
-        </button>
-
-        {isEdit && <UserInfoEdit />}
       </>
     );
   }

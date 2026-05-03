@@ -1,11 +1,13 @@
+import { Categorys } from '@/types/user/UserType';
+
 export interface ExpenseItemType {
   id: string;
   user_id: string;
   title: string; // 소비한 내역
   description?: string; // 메모
-  amount: number;
+  amount: number | undefined;
   transaction_type: 'in' | 'out' | 'transfer'; // 수입, 지출, 자산이동
-  categorys?: string[]; // 소비한 카테고리
+  categorys?: Categorys[]; // 소비한 카테고리
   date: string;
 
   // 아래 4개는 나중에 구현하기
@@ -22,9 +24,9 @@ export interface CreateExpenseItemType {
   user_id: string;
   title: string;
   description?: string;
-  amount: number;
+  amount: number | undefined;
   transaction_type: 'in' | 'out' | 'transfer';
-  categorys?: string[];
+  categorys?: Categorys[];
   date: string;
 }
 
@@ -32,8 +34,8 @@ export interface UpdateExpenseItemType {
   user_id: string;
   title: string;
   description?: string;
-  amount: number;
+  amount: number | undefined;
   transaction_type: 'in' | 'out' | 'transfer';
-  categorys?: string[];
+  categorys?: Categorys[];
   date: string;
 }

@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
+// import router from 'next/router';
 import { createBrowserClient } from '@supabase/ssr';
 import { User } from '@supabase/supabase-js'; // Supabase 제공 타입 임포트
-import router from 'next/router';
-// import { User } from '@/types/UserType'
 
 export default function TermsPage() {
   const [user, setUser] = useState<User | null>(null);
@@ -36,7 +36,7 @@ export default function TermsPage() {
       nickname: user.user_metadata.full_name || user.user_metadata.name,
       avatar_url: user.user_metadata.avatar_url,
       provider: user.app_metadata.provider,
-      class: '3', // 1: 관리자, 2: ??, 3: 유저
+      role: 'user',
       created_at: user.created_at,
       updated_at: user.updated_at,
       last_sign_in: user.last_sign_in_at,
@@ -46,8 +46,19 @@ export default function TermsPage() {
   };
 
   const handleCancel = async () => {
-    await supabase.auth.signOut(); // 쿠키 삭제 및 세션 종료
-    router.push('/login'); // 다시 로그인 페이지로
+    try {
+      // 1. 혹시 모를 자동 저장 로직이 돌지 않도록 상태를 먼저 flag 처리 (필요시)
+      // isLoggingOut.current = true;
+  
+      // 2. 먼저 페이지 이동을 시도하거나 세션 종료
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+  
+      // 3. 페이지 이동
+      window.location.href = '/login'; // router.push보다 더 확실하게 전체 상태를 리셋함
+    } catch (error) {
+      console.error('로그아웃 중 에러:', error);
+    }
   };
 
   return (
