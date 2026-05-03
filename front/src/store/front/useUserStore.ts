@@ -2,18 +2,24 @@ import { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { UserType } from '@/types/user/UserType';
+
 interface UserState {
   user: User | null;
+  profile: UserType | null;
   isInitialized: boolean;
   setUser: (user: User | null) => void;
+  setUserProfile: (profile: UserType | null) => void;
 }
 
 export const useUserStore = create<UserState>()(
   devtools(
     (set) => ({
       user: null,
+      profile: null,
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
+      setUserProfile: (profile) => set({ profile, isInitialized: true }),
     }),
     { name: 'UserStore' }, // 선택 사항: 데브툴에 표시될 이름
   ),

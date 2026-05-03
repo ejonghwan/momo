@@ -2,8 +2,10 @@
 
 import { memo, useState } from 'react';
 
+import DeleteExpense from '@/components/style-ui/expense/DeleteExpense';
 import UpdateExpense from '@/components/style-ui/expense/UpdateExpense';
 import { ExpenseItemType } from '@/types/expense/ExpenseType';
+import { formatComma } from '@/utils/utils';
 
 interface Props {
   item: ExpenseItemType;
@@ -38,7 +40,7 @@ const ExpenseItem = ({ item }: Props) => {
           <br />
           <span>{item.title}</span>
           <br />
-          <span>{item.amount}</span>
+          <span>{formatComma(item.amount)}원</span>
           <br />
           <span>
             type:
@@ -60,9 +62,10 @@ const ExpenseItem = ({ item }: Props) => {
           <button type="button" onClick={(e) => handleExpenseUpdate(e, item.id)}>
             수정
           </button>
-          <button type="button" onClick={(e) => handleExpenseDelete(e, item.id)}>
+          {/* <button type="button" onClick={(e) => handleExpenseDelete(e, item.id)}>
             삭제
-          </button>
+          </button> */}
+          <DeleteExpense id={item.id} />
           <br />
           <br />
           <hr />

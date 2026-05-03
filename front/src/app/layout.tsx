@@ -22,15 +22,30 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 인증된 user 기본 데이터
   const supabase = await getCookieStore();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // db에 저장된 user data
+  let userProfile = null;
+  if (user) {
+    const { data, error } = await supabase
+      .from('users') // 'users' 테이블 혹은 'profiles' 테이블
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (!error && data) {
+      userProfile = data;
+    }
+  }
+
   return (
     <html lang="ko" className={`${fontDefault.variable}`}>
       <body className="">
-        <AuthProvider serverUser={user}>
+        <AuthProvider serverUser={user} userProfile={userProfile}>
           <DeviceTypeLayout>
             <Providers>{children}</Providers>
           </DeviceTypeLayout>
@@ -39,44 +54,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
-// import { Metadata, Viewport } from "next";
-// import { Providers } from "./providers";
-// import { fontDefault } from '@/src/lib/ui/fonts'
-// import "@/src/styles/globals.css";
-// import DeviceTypeLayout from "@/src/components/common/device-type-layout";
-
-// // import clsx from "clsx";
-
-// export const metadata: Metadata = {
-// 	title: '',
-// 	description: 'b',
-// 	icons: {
-// 		icon: "/favicon.ico",
-// 	},
-// };
-
-// export const viewport: Viewport = {
-// 	themeColor: [
-// 		{ media: "(prefers-color-scheme: light)", color: "white" },
-// 		{ media: "(prefers-color-scheme: dark)", color: "black" },
-// 	],
-// }
-
-// export default function RootLayout({ children, }: { children: React.ReactNode; }) {
-
-// 	return (
-// 		<html lang="ko" suppressHydrationWarning className={`${fontDefault.variable}`}>
-// 			<head />
-// 			{/* min-h-screen bg-background font-sans antialiased */}
-// 			<body className={`antialiased`}
-// 			>
-// 				<DeviceTypeLayout>
-// 					<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-// 						{children}
-// 					</Providers>
-// 				</DeviceTypeLayout>
-// 			</body>
-// 		</html>
-// 	);
-// }

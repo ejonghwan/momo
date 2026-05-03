@@ -68,10 +68,10 @@ export const timer = (
  */
 export const changeDate = (totalNumber: number, viewTime: string) => {
   if (typeof totalNumber !== 'number') return console.error('넘버로 넣어줭');
-  let day = Math.floor(Math.floor(Math.floor(totalNumber / 60) / 60) / 24);
-  let hour = Math.floor(Math.floor(totalNumber / 60) / 60) % 24;
-  let minute = Math.floor(totalNumber / 60) % 60;
-  let second = totalNumber % 60;
+  const day = Math.floor(Math.floor(Math.floor(totalNumber / 60) / 60) / 24);
+  const hour = Math.floor(Math.floor(totalNumber / 60) / 60) % 24;
+  const minute = Math.floor(totalNumber / 60) % 60;
+  const second = totalNumber % 60;
 
   switch (viewTime) {
     case 'day':

@@ -1,17 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import clsx from 'clsx';
+
 import LoginButton from '@/components/style-ui/user/LoginButton';
 import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
-import { useUserStore } from '@/store/front/useUserStore';
 import UserAvatar from '@/components/style-ui/user/UserAvatar';
+import UserInfoEdit from '@/components/style-ui/user/UserInfoEdit';
+import { useUserStore } from '@/store/front/useUserStore';
+
 import style from '@/styles/components/user/UserInfo.module.scss';
-import clsx from 'clsx';
 
 const UserInfo = () => {
   const user = useUserStore((state) => state.user);
+  const profile = useUserStore((state) => state.profile);
   const isInitialized = useUserStore((state) => state.isInitialized);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   if (!isInitialized) {
     return (
@@ -35,6 +41,7 @@ const UserInfo = () => {
   if (isInitialized && user) {
     return (
       <>
+        <div>user info</div>
         {user.user_metadata?.avatar_url && (
           <div className={style['user__info__wrap']}>
             {/* <Skeleton width={"50px"} height={"50px"} borderRadius={"50%"} /> */}
@@ -56,8 +63,47 @@ const UserInfo = () => {
             >
               {user.app_metadata.provider?.slice(0, 1).toLocaleUpperCase()}
             </div>
+            <div>클래스 : {profile?.class}</div>
+            <div>
+              닉네임 :{' '}
+              {profile?.nickname ? profile?.nickname : <button type="button">닉네임 설정</button>}
+            </div>
+            <div>
+              셀프 카테고리 :
+              {profile?.self_categorys ? (
+                profile?.self_categorys
+              ) : (
+                <button type="button">자주사용하는 카테고리 설정하기</button>
+              )}
+            </div>
+            <div>
+              카드 or 계좌들 :
+              {profile?.assets ? (
+                profile?.assets
+              ) : (
+                <button type="button">카드/계좌 등록하기</button>
+              )}
+            </div>
+            <div>
+              디폴트 asset :
+              {profile?.default_asset ? (
+                profile?.default_asset
+              ) : (
+                <button type="button">기본 카드/계좌 등록하기</button>
+              )}
+            </div>
+
+            <br />
+            <div>마지막 접속일 : {profile?.last_sign_in}</div>
+            <div>가입일 : {profile?.created_at}</div>
+            <div>개인정보 수정일 : {profile?.updated_at}</div>
           </div>
         )}
+        <button type="button" onClick={() => setIsEdit((prev) => !prev)}>
+          정보 수정
+        </button>
+
+        {isEdit && <UserInfoEdit />}
       </>
     );
   }

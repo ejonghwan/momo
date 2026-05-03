@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   FormEvent,
   SetStateAction,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -40,7 +41,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   });
 
   // form 작성
-  const handleChangeExpense = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeExpense = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
     const { name, value, checked } = e.target;
 
@@ -65,7 +66,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     // 라디오가 income, expense로 오니깐 분기처리
     // const val = value === 'expense' ? false : value === 'income' ? true : value;
     setUpdateExpenseData((prev) => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
   // request insert
   const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {

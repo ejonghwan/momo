@@ -14,7 +14,7 @@ interface ExpenseState {
   setExpense: (expense: ExpenseItemType[]) => void;
   addExpense: (newExpense: ExpenseItemType) => void;
   updateExpense: (expense: ExpenseItemType) => void;
-  removeExpense: (id: string) => void;
+  deleteExpense: (id: string) => void;
 }
 
 /* 
@@ -50,10 +50,6 @@ export const useExpenseStore = create<ExpenseState>()(
 
       setExpense: (expense) => set({ expense, isInitialized: true }),
 
-      // createExpense: (newExpense: ExpenseItemType) => set((state) => {
-      //   return
-      // })
-
       addExpense: (newExpense: ExpenseItemType) =>
         set((state) => ({
           expense: [newExpense, ...state.expense],
@@ -62,16 +58,15 @@ export const useExpenseStore = create<ExpenseState>()(
       updateExpense: (updatedItem: ExpenseItemType) =>
         set((state) => ({
           expense: state.expense?.map((item) => {
-            // 🚨 핵심 포인트: item이 존재할 때만 id를 비교합니다.
-            // if (!item || !item.id) return item;
-            console.log('stroe?????????????', item, state.expense, updatedItem);
+            if (!item || !item.id) return item;
+            // console.log('stroe?????????????', item, state.expense, updatedItem);
 
             return item.id === updatedItem.id ? updatedItem : item;
           }),
         })),
 
       // state는 스토어 전체
-      removeExpense: (id: string) =>
+      deleteExpense: (id: string) =>
         set((state) => ({ expense: state.expense?.filter((item) => item.id !== id) })),
     }),
     { name: 'UserStore' },

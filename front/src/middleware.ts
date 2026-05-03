@@ -3,14 +3,13 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function middleware(request: NextRequest) {
-  // 1. 초기 응답 객체 생성
   let response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   });
 
-  // 2. supabase 클라이언트 생성
+  // supabase 클라이언트 생성
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -34,8 +33,8 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  // 3. 세션 갱신 (리프레시 토큰 처리)
-  // 중요: 여기서 정보를 읽어와야 쿠키가 최신화됩니다.
+  // 세션 갱신 리프레시 토큰 처리
+  // 여기서 정보를 읽어와야 쿠키가 최신화
   await supabase.auth.getUser();
 
   return response;

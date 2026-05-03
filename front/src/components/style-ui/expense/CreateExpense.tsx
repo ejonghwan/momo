@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 
 import { format } from 'date-fns';
 
@@ -28,7 +28,7 @@ const CreateExpense = () => {
   // 자산이동은 다른 컴포넌트로 뺴야될듯 ?
 
   // form 작성
-  const handleChangeExpense = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeExpense = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value);
     const { name, value, checked } = e.target;
 
@@ -54,7 +54,7 @@ const CreateExpense = () => {
     // 라디오가 income, expense로 오니깐 분기처리
     // const val = value === 'expense' ? false : value === 'income' ? true : value;
     setCreateExpense((prev) => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
   // request insert
   const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
@@ -77,7 +77,7 @@ const CreateExpense = () => {
         description: '',
         amount: 0,
         transaction_type: 'out',
-        categorys: [],
+        categorys: categories,
         date: format(new Date(), 'yyyy-MM-dd'),
       });
       alert('저장 완료!');
@@ -91,7 +91,33 @@ const CreateExpense = () => {
   // useEffect에선 setSTate 사용시
   // 렌더링 완 -> useEffect 실행 -> setState -> 재렌더링 -> 리액트(무한렌더링??)
 
-  const categories = ['식비', '교통비', '쇼핑', '의료비', '교육', '통신', '기타'];
+  // 카테고리 기능 수정
+  // const categories = ['식비', '교통비', '쇼핑', '의료비', '교육', '통신'];
+  const [categoryValue, setCategoryValue] = useState<string>('');
+  const [categories, setCategories] = useState([
+    '식비',
+    '교통비',
+    '쇼핑',
+    '의료비',
+    '교육',
+    '통신',
+  ]);
+
+  const handleClickAddCategory = () => {
+    if (!categoryValue.trim()) return alert('카테고리명을 입력해주세요.');
+    if (categories.includes(categoryValue)) return alert('이미 존재하는 카테고리입니다.');
+    setCategories((prev) => [...prev, categoryValue]);
+
+    // payload state에 추가
+    setCreateExpense((prev) => ({
+      ...prev,
+      categorys: [...(prev.categorys || []), categoryValue],
+    }));
+    setCategoryValue('');
+
+    // 유저 개인 db에 추가할지 묻는 alert.
+    // true => 유저 db에 추가
+  };
 
   return (
     <div>
@@ -185,6 +211,21 @@ const CreateExpense = () => {
             {cat}
           </label>
         ))}
+        <label key={'기타'}>
+          <input
+            type="input"
+            name="categorys"
+            value={categoryValue} // 이 값이 배열에 들어감
+            placeholder="기타"
+            // 배열에 있으면 체크 상태
+            // onChange={(e) => handleChangeExpense(e)}
+            onChange={(e) => setCategoryValue(e.target.value)}
+          />
+          <button type="button" onClick={handleClickAddCategory}>
+            추가
+          </button>
+        </label>
+        <p>※ 개인정보 수정 &gt; 카테고리추가에서 추가할 수 있습니다</p>
 
         <br />
 
