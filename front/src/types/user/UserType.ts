@@ -23,7 +23,7 @@ export interface UserType {
   default_asset: string; // 기본선택한 카드 or 계좌
 
   last_sign_in: string;
-  reated_at: string;
+  created_at: string;
   updated_at: string;
 }
 

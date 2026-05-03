@@ -49,11 +49,11 @@ export default function TermsPage() {
     try {
       // 1. 혹시 모를 자동 저장 로직이 돌지 않도록 상태를 먼저 flag 처리 (필요시)
       // isLoggingOut.current = true;
-  
+
       // 2. 먼저 페이지 이동을 시도하거나 세션 종료
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-  
+
       // 3. 페이지 이동
       window.location.href = '/login'; // router.push보다 더 확실하게 전체 상태를 리셋함
     } catch (error) {

@@ -63,7 +63,7 @@ const UserInfo = () => {
             >
               {user.app_metadata.provider?.slice(0, 1).toLocaleUpperCase()}
             </div>
-            <div>클래스 : {profile?.class}</div>
+            <div>클래스 : {profile?.role}</div>
             <div>
               닉네임 :{' '}
               {profile?.nickname ? profile?.nickname : <button type="button">닉네임 설정</button>}

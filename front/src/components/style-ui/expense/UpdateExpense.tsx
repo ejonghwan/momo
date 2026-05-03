@@ -21,7 +21,6 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   const user = useUserStore((state) => state.user);
   const updateExpense = useExpenseStore((state) => state.updateExpense);
 
-  
   const [updateExpenseData, setUpdateExpenseData] = useState<UpdateExpenseItemType>({
     user_id: item.user_id,
     title: item.title,
@@ -107,20 +106,20 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     (Object.keys(updateExpenseData) as Array<keyof UpdateExpenseItemType>).forEach((key) => {
       const newValue = updateExpenseData[key];
       const oldValue = item[key as keyof ExpenseItemType];
-    
+
       // 비교
       if (Array.isArray(newValue)) {
         if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           changedFields[key] = newValue as any;
         }
-      } 
+      }
       // 날짜만 예외 비교 처리
       else if (key === 'date') {
         // DB의 긴 문자열과 state의 짧은 문자열을 모두 yyyy-MM-dd로 통일해서 비교
         const formattedNew = format(new Date(newValue as string), 'yyyy-MM-dd');
         const formattedOld = format(new Date(oldValue as string), 'yyyy-MM-dd');
-    
+
         if (formattedNew !== formattedOld) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           changedFields[key] = newValue as any;
@@ -133,7 +132,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
       }
     });
 
-    console.log('changedFields???', changedFields)
+    console.log('changedFields???', changedFields);
 
     if (Object.keys(changedFields).length === 0) {
       alert('변경사항이 없습니다.');
@@ -166,7 +165,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
   };
 
   return (
-    <div>
+    <div style={{ border: '10rem solid yellow' }}>
       <form onSubmit={handleSubmitExpense}>
         <label>제목</label>
         <input

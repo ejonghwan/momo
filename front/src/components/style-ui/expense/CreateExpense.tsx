@@ -200,7 +200,7 @@ const CreateExpense = () => {
           </button>
         </div>
         <button type="submit" style={{ marginTop: '20px' }}>
-          지출 내역 저장
+          내역 저장
         </button>
       </form>
 
