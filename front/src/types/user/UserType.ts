@@ -1,8 +1,15 @@
+export interface Banks {
+  id: string;
+  name: string;
+  bank: string;
+  code: string;
+}
+
 export interface Assets {
   id: string;
   name: string;
   default: boolean;
-  bank: string;
+  bank: Banks;
 }
 
 export interface Categorys {

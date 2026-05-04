@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 
-import { DEFAULT_CATEGORIES } from '@/constants/category';
+import { UxSelectBankItem, UxSelectBankWrap } from '@/components/style-ui/common/UxSelectBank';
+import { DEFAULT_BANK } from '@/constants/assets';
 import { useUserStore } from '@/store/front/useUserStore';
+import { supabaseClient } from '@/store/supabase/client';
 import { Assets, Categorys } from '@/types/user/UserType';
 import { generateId } from '@/utils/utils';
 
-interface Props {
-  assets: Assets[] | undefined;
-}
+// interface Props {
+//   assets: Assets[] | undefined;
+// }
 
-const UserInfoAssets = ({ assets }: Props) => {
+const UserInfoAssets = () => {
   const profile = useUserStore((state) => state.profile);
   const setProfile = useUserStore((state) => state.setUserProfile);
 
@@ -55,7 +57,55 @@ const UserInfoAssets = ({ assets }: Props) => {
   };
 
   // 섭밋
-  const handleSubmit = (e: React.SyntheticEvent) => {};
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    try {
+      const oldAssets = profile?.assets || [];
+      const newItems = assetsData.filter(
+        (newAss) => !oldAssets.some((oldAss) => oldAss.id === newAss.id),
+      );
+      const totalLen = [...assetsData, ...newItems].length; // 기존 카테고리와 추가된 카테고리 총 렝스
+
+      // 새로운 아이템이 추가되지 않거나 기존이랑 같으면 변경하지않음
+      if (newItems.length <= 0 && oldAssets.length === totalLen)
+        return alert('추가된 자산이 없습니다.');
+
+      const { data: updatedProfile, error } = await supabaseClient
+        .from('users')
+        .update({ assets: assetsData })
+        .eq('id', profile?.id)
+        .select();
+
+      if (error) throw error;
+
+      // 성공시
+      if (updatedProfile && profile) {
+        setProfile({ ...profile, assets: updatedProfile[0].assets });
+        alert(`자산리스트가 변경 되었습니다.`);
+        setisEdit((prev) => !prev);
+      }
+    } catch (error) {
+      console.error('업데이트 실패:', error);
+      alert('저장 중 오류가 발생했습니다.');
+    }
+  };
+
+  // ######################################## test
+  // ######################################## test
+  // ######################################## test
+  // ######################################## test
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // 2. 핸들러 함수: 자식이 클릭되었을 때 실행될 함수
+  const handleSelect = (id: string) => {
+    // 이미 선택된 걸 또 누르면 해제하고 싶다면:
+    // setSelectedId(prev => prev === id ? null : id);
+
+    // 그냥 선택만 교체하고 싶다면:
+    setSelectedId(id);
+
+    console.log('부모가 받은 선택된 ID:', id);
+  };
 
   return (
     <div>
@@ -69,6 +119,31 @@ const UserInfoAssets = ({ assets }: Props) => {
 
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
+              {/* <UxSelectBankWrap>
+                {DEFAULT_BANK.map((item) => (
+                  <UxSelectBankItem
+                    key={item.id}
+                    data={item}
+                    onClick={(e, id) => {
+                      console.log('e???????????????????', e, id);
+                    }}
+                  />
+                ))}
+              </UxSelectBankWrap> */}
+
+              <UxSelectBankWrap>
+                {DEFAULT_BANK.map((bank) => (
+                  <UxSelectBankItem
+                    key={bank.id}
+                    data={bank}
+                    // 2. 현재 선택된 ID와 이 아이템의 ID가 같으면 활성화
+                    isActive={selectedId === bank.id}
+                    // 3. 자식이 클릭되면 부모의 상태 변경 함수 호출
+                    onClick={handleSelect}
+                  />
+                ))}
+              </UxSelectBankWrap>
+
               <div>
                 자산:
                 {(assetsData as Categorys[])?.map((ass) => (

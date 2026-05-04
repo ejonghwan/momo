@@ -1,0 +1,12 @@
+.banklist__wrap {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.banklist__item {
+  flex: 0 0 auto;
+  &--active {
+    border: 2px solid red;
+  }
+}

@@ -3,13 +3,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
+  const response = NextResponse.next({
+    request: { headers: request.headers },
   });
 
-  // supabase 클라이언트 생성
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -19,23 +16,19 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
+          cookiesToSet.forEach(({ name, value, options }) => {
+            request.cookies.set(name, value);
+            response.cookies.set(name, value, options);
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options),
-          );
         },
       },
     },
   );
 
-  // 세션 갱신 리프레시 토큰 처리
-  // 여기서 정보를 읽어와야 쿠키가 최신화
-  await supabase.auth.getUser();
+  // 무거운 getUser()는 과감히 삭제!
+  // 대신 쿠키 정보를 업데이트하기 위해 가벼운 getSession() 정도만 사용하거나
+  // 아예 아무것도 안 해도 서버 컴포넌트에서 처리 가능합니다.
+  await supabase.auth.getSession();
 
   return response;
 }
