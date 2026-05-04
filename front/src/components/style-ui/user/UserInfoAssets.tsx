@@ -95,14 +95,12 @@ const UserInfoAssets = () => {
   // ######################################## test
   // ######################################## test
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  // 2. 핸들러 함수: 자식이 클릭되었을 때 실행될 함수
   const handleSelect = (id: string) => {
     // 이미 선택된 걸 또 누르면 해제하고 싶다면:
-    // setSelectedId(prev => prev === id ? null : id);
+    setSelectedId((prev) => (prev === id ? null : id));
 
     // 그냥 선택만 교체하고 싶다면:
-    setSelectedId(id);
+    // setSelectedId(id);
 
     console.log('부모가 받은 선택된 ID:', id);
   };
@@ -136,9 +134,7 @@ const UserInfoAssets = () => {
                   <UxSelectBankItem
                     key={bank.id}
                     data={bank}
-                    // 2. 현재 선택된 ID와 이 아이템의 ID가 같으면 활성화
                     isActive={selectedId === bank.id}
-                    // 3. 자식이 클릭되면 부모의 상태 변경 함수 호출
                     onClick={handleSelect}
                   />
                 ))}
