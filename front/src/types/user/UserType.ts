@@ -1,6 +1,6 @@
 export interface Banks {
   id: string;
-  name: string;
+  icon: string;
   bank: string;
   code: string;
 }

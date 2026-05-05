@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { id } from 'date-fns/locale';
+
 import { UxSelectBankItem, UxSelectBankWrap } from '@/components/style-ui/common/UxSelectBank';
 import { DEFAULT_BANK } from '@/constants/assets';
 import { useUserStore } from '@/store/front/useUserStore';
@@ -94,15 +96,21 @@ const UserInfoAssets = () => {
   // ######################################## test
   // ######################################## test
   // ######################################## test
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const handleSelect = (id: string) => {
-    // 이미 선택된 걸 또 누르면 해제하고 싶다면:
-    setSelectedId((prev) => (prev === id ? null : id));
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    // test2
+    setSelectedIds((prev) => {
+      // if (isOne) {
+      if (false) {
+        // 하나만 선택 모드: 토글 로직
+        return prev.includes(id) ? [] : [id];
+      } else {
+        // 멀티 선택 모드
+        return prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
+      }
+    });
 
-    // 그냥 선택만 교체하고 싶다면:
-    // setSelectedId(id);
-
-    console.log('부모가 받은 선택된 ID:', id);
+    console.log('현재 선택된 ID 목록:', selectedIds);
   };
 
   return (
@@ -117,24 +125,13 @@ const UserInfoAssets = () => {
 
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
-              {/* <UxSelectBankWrap>
-                {DEFAULT_BANK.map((item) => (
-                  <UxSelectBankItem
-                    key={item.id}
-                    data={item}
-                    onClick={(e, id) => {
-                      console.log('e???????????????????', e, id);
-                    }}
-                  />
-                ))}
-              </UxSelectBankWrap> */}
-
               <UxSelectBankWrap>
                 {DEFAULT_BANK.map((bank) => (
                   <UxSelectBankItem
                     key={bank.id}
                     data={bank}
-                    isActive={selectedId === bank.id}
+                    // isActive={selectedId === bank.id}
+                    isActive={selectedIds.includes(bank.id)}
                     onClick={handleSelect}
                   />
                 ))}

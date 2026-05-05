@@ -1,51 +1,10 @@
 // import React, { useState } from 'react';
 
-import { useState } from 'react';
-
 import clsx from 'clsx';
 
 import { Banks } from '@/types/user/UserType';
 
 import style from '@/styles/common/UxSelectBank.module.scss';
-
-// import clsx from 'clsx';
-
-// import { Banks } from '@/types/user/UserType';
-
-// import style from '@/styles/common/UxSelectBank.module.scss';
-
-// --------------------------------------------------- UxSelectBank [S]
-
-interface Props {
-  data: Banks;
-  classNames?: string;
-  isActive: boolean;
-  onClick: (id: string) => void;
-}
-
-export const UxSelectBankItem = ({ data, classNames, onClick, isActive }: Props) => {
-  return (
-    <div
-      className={clsx(style['banklist__item'], classNames, {
-        [style['banklist__item--active']]: isActive,
-      })}
-    >
-      {onClick ? (
-        <>
-          <button key={data.id} type={'button'} onClick={(e) => onClick(data.id)}>
-            {data.name}
-          </button>
-        </>
-      ) : (
-        <>
-          <span key={data.id}>{data.name}</span>
-        </>
-      )}
-    </div>
-  );
-};
-
-// --------------------------------------------------- UxSelectBank [E]
 
 // --------------------------------------------------- UxSelectBankWrap [S]
 
@@ -60,3 +19,36 @@ export const UxSelectBankWrap = ({ children, classNames }: UxSelectBankWrapProps
 };
 
 // --------------------------------------------------- UxSelectBankWrap [E]
+
+// --------------------------------------------------- UxSelectBank [S]
+
+interface Props {
+  data: Banks;
+  classNames?: string;
+  isActive: boolean;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+}
+
+export const UxSelectBankItem = ({ data, classNames, isActive = false, onClick }: Props) => {
+  return (
+    <div
+      className={clsx(style['banklist__item'], classNames, {
+        [style['banklist__item--active']]: isActive,
+      })}
+    >
+      {onClick ? (
+        <>
+          <button key={data.id} type={'button'} onClick={(e) => onClick(e, data.id)}>
+            {data.bank}
+          </button>
+        </>
+      ) : (
+        <>
+          <span key={data.id}>{data.bank}</span>
+        </>
+      )}
+    </div>
+  );
+};
+
+// --------------------------------------------------- UxSelectBank [E]
