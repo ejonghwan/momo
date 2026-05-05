@@ -9,7 +9,7 @@ export interface Assets {
   id: string;
   name: string;
   default: boolean;
-  bank: Banks;
+  bank: Banks[];
 }
 
 export interface Categorys {

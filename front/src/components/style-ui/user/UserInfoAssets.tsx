@@ -1,14 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { id } from 'date-fns/locale';
-
-import { UxSelectBankItem, UxSelectBankWrap } from '@/components/style-ui/common/UxSelectBank';
+import { UxSelectBankWrap } from '@/components/style-ui/common/UxSelectBank';
 import { DEFAULT_BANK } from '@/constants/assets';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
-import { Assets, Categorys } from '@/types/user/UserType';
+import { Assets, Banks } from '@/types/user/UserType';
 import { generateId } from '@/utils/utils';
 
 // interface Props {
@@ -22,7 +20,7 @@ const UserInfoAssets = () => {
   const [isEdit, setisEdit] = useState<boolean>(false);
   const [assetsData, setAssetsData] = useState<Assets[]>(profile?.assets || []);
   const [assetsValue, setAssetsValue] = useState<string>('');
-
+  const [selectedBank, setSelectedBank] = useState<Banks[]>([]); // 은행선택
   // 수정
   const handleClickEdit = () => {
     setisEdit((prev) => !prev);
@@ -46,7 +44,7 @@ const UserInfoAssets = () => {
       id: generateId(),
       name: assetsValue,
       default: false,
-      bank: 'hana',
+      bank: selectedBank.length > 0 ? selectedBank.map((item) => item) : [],
     };
 
     setAssetsData((prev) => [...prev, newAss]);
@@ -92,26 +90,9 @@ const UserInfoAssets = () => {
     }
   };
 
-  // ######################################## test
-  // ######################################## test
-  // ######################################## test
-  // ######################################## test
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
-    // test2
-    setSelectedIds((prev) => {
-      // if (isOne) {
-      if (false) {
-        // 하나만 선택 모드: 토글 로직
-        return prev.includes(id) ? [] : [id];
-      } else {
-        // 멀티 선택 모드
-        return prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
-      }
-    });
-
-    console.log('현재 선택된 ID 목록:', selectedIds);
-  };
+  useEffect(() => {
+    console.log('assetsData???????', assetsData);
+  }, [assetsData]);
 
   return (
     <div>
@@ -125,22 +106,20 @@ const UserInfoAssets = () => {
 
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
-              <UxSelectBankWrap>
-                {DEFAULT_BANK.map((bank) => (
-                  <UxSelectBankItem
-                    key={bank.id}
-                    data={bank}
-                    // isActive={selectedId === bank.id}
-                    isActive={selectedIds.includes(bank.id)}
-                    onClick={handleSelect}
-                  />
-                ))}
-              </UxSelectBankWrap>
+              <UxSelectBankWrap
+                data={DEFAULT_BANK}
+                isOne
+                selectedBank={selectedBank}
+                setSelectedBank={setSelectedBank}
+              />
 
               <div>
-                자산:
-                {(assetsData as Categorys[])?.map((ass) => (
+                은행설정: {selectedBank.length > 0 ? selectedBank.map((item) => item.bank) : '기타'}
+                <br />
+                자산별명:
+                {(assetsData as Assets[])?.map((ass) => (
                   <span key={ass.id}>
+                    <span>{ass.bank.map((item) => item.bank)} - </span>
                     {ass.name}{' '}
                     <button
                       type="button"
@@ -177,7 +156,7 @@ const UserInfoAssets = () => {
             <>
               {assetsData?.map((item, key) => (
                 <span key={key} className={item.default ? 'select' : ''}>
-                  {item.name}
+                  <span>{item.bank.map((item) => item.bank)}</span> -<span>{item.name}</span>
                 </span>
               ))}
             </>
