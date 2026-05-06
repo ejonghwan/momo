@@ -72,10 +72,10 @@ const UserInfo = () => {
               셀프 카테고리 : <UserInfoSelfCategory categorys={profile?.self_categorys} />
             </div>
             <div>
-              카드 or 계좌들 : <UserInfoAssets assets={profile?.assets} />
+              카드 or 계좌들 : <UserInfoAssets />
             </div>
             <div>
-              디폴트 : <UserInfoDefaultAssets defalutAssets={profile?.default_asset} />
+              디폴트 : <UserInfoDefaultAssets />
             </div>
 
             <br />

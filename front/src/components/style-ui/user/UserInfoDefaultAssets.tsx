@@ -8,11 +8,11 @@ import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
 import { Assets } from '@/types/user/UserType';
 
-interface Props {
-  defaultAssets: Assets | undefined;
-}
+// interface Props {
+//   defaultAssets: Assets | undefined;
+// }
 
-const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
+const UserInfoDefaultAssets = () => {
   // 이 컴포넌트는 assets랑 합칠지 고민중
   const profile = useUserStore((state) => state.profile);
 
@@ -24,6 +24,10 @@ const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
     setDefaultAssetData(item);
   };
 
+  const handleClickAddAmount = () => {
+    setIsEdit((prev) => !prev);
+  };
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
@@ -31,7 +35,7 @@ const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
 
       const { data: updatedProfile, error } = await supabaseClient
         .from('users')
-        .update({ default_asset: defaultAssets })
+        .update({ default_asset: defaultAssetData })
         .eq('id', profile?.id)
         .select();
 
@@ -40,8 +44,8 @@ const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
       // 성공시
       if (updatedProfile && profile) {
         // setProfile({ ...profile, assets: updatedProfile[0].assets });
-        // alert(`자산리스트가 변경 되었습니다.`);
-        // setisEdit((prev) => !prev);
+        alert(`자산리스트가 변경 되었습니다.`);
+        setIsEdit((prev) => !prev);
       }
     } catch (error) {
       console.error('업데이트 실패:', error);
@@ -68,6 +72,7 @@ const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
               {defaultAssetData?.name}
               {/* {defaultAssetData?.default === true } */}
             </div>
+            <button type="submit">등록하기</button>
           </form>
         </>
       ) : (
@@ -77,7 +82,9 @@ const UserInfoDefaultAssets = ({ defaultAssets }: Props) => {
         </div>
       )}
       {/* {defaultAssets ? defaultAssets : <span>기본 설정된 카드가 없습니다</span>} */}
-      <button type="button">기본 카드/계좌 등록하기</button>
+      <button type="button" onClick={handleClickAddAmount}>
+        {isEdit ? '캔슬' : '기본 카드/계좌 등록하기'}
+      </button>
     </div>
   );
 };
