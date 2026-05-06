@@ -2,8 +2,10 @@
 
 import { memo, useState } from 'react';
 
+import AssetSelected from '@/components/style-ui/expense/AssetSelected';
 import DeleteExpense from '@/components/style-ui/expense/DeleteExpense';
 import UpdateExpense from '@/components/style-ui/expense/UpdateExpense';
+import { useUserStore } from '@/store/front/useUserStore';
 import { ExpenseItemType } from '@/types/expense/ExpenseType';
 import { formatComma } from '@/utils/utils';
 
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const ExpenseItem = ({ item }: Props) => {
+  const profile = useUserStore((state) => state.profile);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const handleExpenseUpdate = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
@@ -19,7 +23,7 @@ const ExpenseItem = ({ item }: Props) => {
     setIsEdit((prev) => !prev);
   };
 
-  console.log('list item ?? item?????????', item);
+  // console.log('list item ?? item?????????', item);
 
   return (
     <div>
@@ -46,6 +50,9 @@ const ExpenseItem = ({ item }: Props) => {
                 ? '지출'
                 : '자산이동'}
           </span>
+          <br />
+          assets : <br />
+          {/* 아직안함. 선택한 에셋  */}
           <br />
           <span>
             category:

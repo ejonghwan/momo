@@ -1,0 +1,8 @@
+.asset__select__wrap {
+  .asset__select__item {
+    margin: 4rem;
+    &--active {
+      border: 2px solid red;
+    }
+  }
+}

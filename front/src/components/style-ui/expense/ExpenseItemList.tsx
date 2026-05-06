@@ -20,8 +20,6 @@ const ExpenseItemList = () => {
     }
   }, [user?.id, loadExpenses]); // 의존성 배열에 넣어주어 안전하게 관리
 
-  console.log('data??', data);
-
   if (isLoading && data.length === 0) return <div>데이터 불러오는 중...</div>;
 
   return (

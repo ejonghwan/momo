@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
 import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
+import AssetSelected from '@/components/style-ui/expense/AssetSelected';
 import { DEFAULT_CATEGORIES } from '@/constants/category';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
@@ -14,6 +15,7 @@ import { Categorys } from '@/types/user/UserType';
 
 const CreateExpense = () => {
   const user = useUserStore((state) => state.user);
+  const profile = useUserStore((state) => state.profile);
   const addExpense = useExpenseStore((state) => state.addExpense);
 
   // 1. 초기 상태값 정리
@@ -25,6 +27,7 @@ const CreateExpense = () => {
     transaction_type: 'out',
     categorys: [],
     date: format(new Date(), 'yyyy-MM-dd'),
+    assets: profile?.assets || undefined,
   };
 
   const [createExpense, setCreateExpense] = useState<CreateExpenseItemType>(initialForm);
@@ -173,6 +176,11 @@ const CreateExpense = () => {
               }))
             }
           />
+        </div>
+        <div>
+          asset : <br />
+          <AssetSelected />
+          {/* // expense db assets 추가 query 필요 */}
         </div>
         <label>카테고리</label>
         {categories.map((cat) => (

@@ -19,6 +19,7 @@ interface Props {
 
 const UpdateExpense = ({ item, setIsEdit }: Props) => {
   const user = useUserStore((state) => state.user);
+  const profile = useUserStore((state) => state.profile);
   const updateExpense = useExpenseStore((state) => state.updateExpense);
 
   const [updateExpenseData, setUpdateExpenseData] = useState<UpdateExpenseItemType>({
@@ -29,6 +30,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     transaction_type: item.transaction_type,
     categorys: item.categorys,
     date: format(new Date(item.date), 'yyyy-MM-dd'),
+    assets: profile?.assets,
   });
 
   // 기타 입력을 위한 상태 추가

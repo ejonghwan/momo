@@ -1,4 +1,4 @@
-import { Categorys } from '@/types/user/UserType';
+import { Assets, Categorys } from '@/types/user/UserType';
 
 export interface ExpenseItemType {
   id: string;
@@ -11,8 +11,8 @@ export interface ExpenseItemType {
   date: string;
 
   // 아래 4개는 나중에 구현하기
-  assets: string[]; // 자산들. 카드 or 계좌
-  default_asset: string; // 기본 선택한 자산
+  assets: Assets[]; // 자산들. 카드 or 계좌
+  default_asset: Assets; // 기본 선택한 자산
   from_account: string; // 어디에서
   to_account: string; // 어디로 보냈는지
 
@@ -28,6 +28,7 @@ export interface CreateExpenseItemType {
   transaction_type: 'in' | 'out' | 'transfer';
   categorys?: Categorys[];
   date: string;
+  assets: Assets[] | undefined;
 }
 
 export interface UpdateExpenseItemType {
@@ -38,4 +39,5 @@ export interface UpdateExpenseItemType {
   transaction_type: 'in' | 'out' | 'transfer';
   categorys?: Categorys[];
   date: string;
+  assets: Assets[] | undefined;
 }

@@ -26,19 +26,6 @@ export const UxSelectBankWrap = ({
   selectedBank,
   setSelectedBank,
 }: UxSelectBankWrapProps) => {
-  // const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
-  //   // test2
-  //   setSelectedBank((prev) => {
-  //     if (isOne) {
-  //       return prev.includes(id) ? [] : [id];
-  //     } else {
-  //       return prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
-  //     }
-  //   });
-
-  //   console.log('현재 선택된 ID 목록:', selectedBank);
-  // };
-
   const handleSelect = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     setSelectedBank((prev) => {
       // 1. 이미 선택된 은행인지 ID로 확인
