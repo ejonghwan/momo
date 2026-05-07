@@ -2,28 +2,22 @@
 
 import { memo, useState } from 'react';
 
-import AssetSelected from '@/components/style-ui/expense/AssetSelected';
 import DeleteExpense from '@/components/style-ui/expense/DeleteExpense';
 import UpdateExpense from '@/components/style-ui/expense/UpdateExpense';
-import { useUserStore } from '@/store/front/useUserStore';
 import { ExpenseItemType } from '@/types/expense/ExpenseType';
-import { formatComma } from '@/utils/utils';
+import { changeViewDate, formatComma } from '@/utils/utils';
 
 interface Props {
   item: ExpenseItemType;
 }
 
 const ExpenseItem = ({ item }: Props) => {
-  const profile = useUserStore((state) => state.profile);
-
   const [isEdit, setIsEdit] = useState(false);
 
   const handleExpenseUpdate = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     console.log('update?', id, item);
     setIsEdit((prev) => !prev);
   };
-
-  // console.log('list item ?? item?????????', item);
 
   return (
     <div>
@@ -51,8 +45,15 @@ const ExpenseItem = ({ item }: Props) => {
                 : '자산이동'}
           </span>
           <br />
-          assets : <br />
-          {/* 아직안함. 선택한 에셋  */}
+          assets :{' '}
+          {item.assets?.map((item) => {
+            return (
+              <span key={item.id}>
+                {item.bank.map((item) => item.bank)}
+                {item.name}
+              </span>
+            );
+          })}
           <br />
           <span>
             category:
@@ -61,11 +62,11 @@ const ExpenseItem = ({ item }: Props) => {
             ))}
           </span>
           <br />
-          <span>생성일:{item.created_at}</span>
+          <span>생성일:{changeViewDate(item.created_at, 'second')}</span>
           <br />
           <span>수정일:{item.updated_at !== item.created_at ? '수정됨' : '널'}</span>
           <br />
-          <span>돈쓴날:{item.date}</span>
+          <span>돈쓴날:{changeViewDate(item.date, 'second')}</span>
           <br />
           <button type="button" onClick={(e) => handleExpenseUpdate(e, item.id)}>
             수정

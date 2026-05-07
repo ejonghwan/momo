@@ -5,12 +5,13 @@ import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useCallback, useState
 import { format } from 'date-fns';
 
 import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
+import { AssetSelectedWrap } from '@/components/style-ui/expense/AssetSelected';
 import { DEFAULT_CATEGORIES } from '@/constants/category';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
 import { ExpenseItemType, UpdateExpenseItemType } from '@/types/expense/ExpenseType';
-import { Categorys } from '@/types/user/UserType';
+import { Assets, Categorys } from '@/types/user/UserType';
 
 interface Props {
   item: ExpenseItemType;
@@ -19,8 +20,11 @@ interface Props {
 
 const UpdateExpense = ({ item, setIsEdit }: Props) => {
   const user = useUserStore((state) => state.user);
-  const profile = useUserStore((state) => state.profile);
+  // const profile = useUserStore((state) => state.profile);
   const updateExpense = useExpenseStore((state) => state.updateExpense);
+
+  // 에셋 수정
+  const [selectAsset, setSelectAsset] = useState<Assets[] | []>(item.assets);
 
   const [updateExpenseData, setUpdateExpenseData] = useState<UpdateExpenseItemType>({
     user_id: item.user_id,
@@ -30,7 +34,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     transaction_type: item.transaction_type,
     categorys: item.categorys,
     date: format(new Date(item.date), 'yyyy-MM-dd'),
-    assets: profile?.assets,
+    assets: selectAsset,
   });
 
   // 기타 입력을 위한 상태 추가
@@ -100,6 +104,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
     setCategoryValue('');
   };
 
+  // 섭밋
   const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!user?.id) return alert('로그인 정보가 없습니다.');
@@ -134,9 +139,12 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
       }
     });
 
-    console.log('changedFields???', changedFields);
+    console.log('update query Fields::::::::::::::::::::::', changedFields);
 
-    if (Object.keys(changedFields).length === 0) {
+    if (
+      Object.keys(changedFields).length === 0 &&
+      selectAsset.some((selectAss) => selectAss.id === item.assets[0].id)
+    ) {
       alert('변경사항이 없습니다.');
       return;
     }
@@ -230,6 +238,11 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
               }))
             }
           />
+        </div>
+        <div>
+          asset : <br />
+          <AssetSelectedWrap selectAsset={selectAsset} setSelectAsset={setSelectAsset} />
+          {/* // expense db assets 추가 query 필요 */}
         </div>
         <label>카테고리</label>
         {categories.map((cat) => (

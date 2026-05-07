@@ -5,13 +5,13 @@ import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
 import UxDatePicker from '@/components/style-ui/common/UxDatePicker';
-import AssetSelected from '@/components/style-ui/expense/AssetSelected';
+import { AssetSelectedWrap } from '@/components/style-ui/expense/AssetSelected';
 import { DEFAULT_CATEGORIES } from '@/constants/category';
 import { useExpenseStore } from '@/store/front/useExpenseStore';
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
 import { CreateExpenseItemType } from '@/types/expense/ExpenseType';
-import { Categorys } from '@/types/user/UserType';
+import { Assets, Categorys } from '@/types/user/UserType';
 
 const CreateExpense = () => {
   const user = useUserStore((state) => state.user);
@@ -32,12 +32,13 @@ const CreateExpense = () => {
 
   const [createExpense, setCreateExpense] = useState<CreateExpenseItemType>(initialForm);
   const [categoryValue, setCategoryValue] = useState<string>('');
-
   const [categories, setCategories] = useState<Categorys[]>(DEFAULT_CATEGORIES);
-
+  const [selectAsset, setSelectAsset] = useState<Assets[] | []>([]);
+  // change fn
   const handleChangeExpense = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
 
+    // 카테고리 처리
     if (name === 'categorys') {
       const catName = e.target.dataset.name || '';
 
@@ -46,7 +47,7 @@ const CreateExpense = () => {
 
         if (checked) {
           const newCategory: Categorys = {
-            id: value, // checkbox의 value (id)
+            id: value,
             name: catName,
             default: false,
           };
@@ -66,24 +67,7 @@ const CreateExpense = () => {
     setCreateExpense((prev) => ({ ...prev, [name]: finalValue }));
   }, []);
 
-  const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!user?.id) return alert('로그인 정보가 없습니다.');
-
-    const payload = {
-      ...createExpense,
-      user_id: user.id,
-    };
-
-    const { data, error } = await supabaseClient.from('expense').insert(payload).select();
-
-    if (!error && data) {
-      addExpense(data[0]);
-      setCreateExpense(initialForm); // 초기화
-      alert('저장 완료!');
-    }
-  };
-
+  // add categorys fn
   const handleClickAddCategory = () => {
     if (!categoryValue.trim()) return alert('카테고리명을 입력해주세요.');
     if (categories.some((c) => c.name === categoryValue))
@@ -104,6 +88,27 @@ const CreateExpense = () => {
       categorys: [...((prev.categorys as Categorys[]) || []), newCat],
     }));
     setCategoryValue('');
+  };
+
+  // submit fn
+  const handleSubmitExpense = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user?.id) return alert('로그인 정보가 없습니다.');
+
+    const payload = {
+      ...createExpense,
+      user_id: user.id,
+      assets: selectAsset,
+    };
+
+    const { data, error } = await supabaseClient.from('expense').insert(payload).select();
+
+    if (!error && data) {
+      addExpense(data[0]);
+      setCreateExpense(initialForm); // 초기화
+      setSelectAsset([]); // 초기화
+      alert('저장 완료!');
+    }
   };
 
   return (
@@ -179,7 +184,7 @@ const CreateExpense = () => {
         </div>
         <div>
           asset : <br />
-          <AssetSelected />
+          <AssetSelectedWrap selectAsset={selectAsset} setSelectAsset={setSelectAsset} />
           {/* // expense db assets 추가 query 필요 */}
         </div>
         <label>카테고리</label>
@@ -219,6 +224,7 @@ const CreateExpense = () => {
         <p>제목: {createExpense.title}</p>
         <p>금액: {createExpense.amount?.toLocaleString()}원</p>
         <p>카테고리: {(createExpense.categorys as Categorys[])?.map((c) => c.name).join(', ')}</p>
+        <p>선택된 에셋: {selectAsset.map((item) => item.name)}</p>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -9,72 +9,44 @@ import { Assets } from '@/types/user/UserType';
 
 import style from '@/styles/components/expense/AssetSelected.module.scss';
 
-// interface Props {
-//   //   assetsData: Assets[] | undefined;
-//   //   isActive: boolean;
-// }
+interface AssetSelectedWrapProps {
+  selectAsset: Assets[];
+  setSelectAsset: Dispatch<SetStateAction<Assets[]>>;
+}
 
-const AssetSelected = () => {
+export const AssetSelectedWrap = ({ selectAsset, setSelectAsset }: AssetSelectedWrapProps) => {
   const profile = useUserStore((state) => state.profile);
-  const [assetsData, setAssetsData] = useState<Assets[] | []>(profile?.assets || []);
-  //  const [assetsData, setAssetsData] = useState<Assets[]>(profile?.assets || []);
-  const [selectAsset, setSelectAsset] = useState<Assets[] | []>([]);
-
-  const isActive = true;
 
   const handleClickAsset = (asset: Assets) => {
-    console.log('sele??', asset);
-
-    const isTarget = profile?.assets.some((item) => item.id === asset.id);
-    console.log('isTarget???', isTarget);
-
-    if (isActive) setSelectAsset([asset]);
+    const isTarget = profile?.assets?.some((item) => item.id === asset.id);
+    if (isTarget) setSelectAsset([asset]);
   };
 
-  useEffect(() => {
-    console.log('assetsData?????????', assetsData);
-
-    console.log(
-      'ho?',
-      assetsData?.map((item) => item.name),
-    );
-  }, [assetsData]);
-
-  //   useEffect(() => {
-  //     if (profile) {
-  //       setAssetsData(profile?.assets);
-  //     }
-  //   }, [profile]);
-
-  //   if (assetsData && assetsData?.length <= 0) {
-  //     return (
-  //       <div>
-  //         카드 등록 안되어있음
-  //         <br />
-  //         <button type="button">등록하러가기</button>
-  //       </div>
-  //     );
-  //   }
+  // if (assetsData && assetsData?.length <= 0) {
+  //   return (
+  //     <div>
+  //       에셋 등록 안되어있음
+  //       <br />
+  //       <button type="button">등록하러가기</button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={style['asset__select__wrap']}>
+      {/* 여기 유닉키 오류남 */}
+      {/* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */}
       ???
-      {profile?.assets.map((item) => (
-        <div
-          key={item.id}
-          className={clsx(style['asset__select__item'], {
-            'asset__select__item--active': isActive,
-          })}
-        >
-          <button type="button" onClick={() => handleClickAsset(item)}>
-            {item.name}
-          </button>
-        </div>
+      {profile?.assets?.map((ass) => (
+        <React.Fragment key={ass.id}>
+          <AssetSelectedItem
+            item={ass}
+            handleClickAsset={handleClickAsset}
+            isActive={selectAsset?.some((item) => item.id === ass.id)}
+          />
+        </React.Fragment>
       ))}
-      <div>
-        선택됨: <br />
-        {selectAsset.map((item) => item.name)}
-      </div>
+      <div>선택됨: {selectAsset?.map((item) => item.name)}</div>
       {/* {assetsData?.map((item) => (
         <div
           key={item.id}
@@ -91,4 +63,26 @@ const AssetSelected = () => {
   );
 };
 
-export default AssetSelected;
+interface AssetSelectedItemProps {
+  item: Assets;
+  handleClickAsset: (item: Assets) => void;
+  isActive: boolean;
+}
+
+export const AssetSelectedItem = ({
+  item,
+  handleClickAsset,
+  isActive = false,
+}: AssetSelectedItemProps) => {
+  return (
+    <div
+      className={clsx(style['asset__select__item'], {
+        [style['asset__select__item--active']]: isActive,
+      })}
+    >
+      <button type="button" onClick={() => handleClickAsset(item)}>
+        {item.name}
+      </button>
+    </div>
+  );
+};

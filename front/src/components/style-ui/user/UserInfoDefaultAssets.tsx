@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import { profile } from 'console';
-
 import { useUserStore } from '@/store/front/useUserStore';
 import { supabaseClient } from '@/store/supabase/client';
 import { Assets } from '@/types/user/UserType';
@@ -12,22 +10,31 @@ import { Assets } from '@/types/user/UserType';
 //   defaultAssets: Assets | undefined;
 // }
 
+/*
+  **assets list
+  1. 에셋 리스트에 등록하지 않으면 default 영역 아예 노렌더링
+  2. lsit에 유저가 등록 후 default_assets 컬럼을 따로 설정하지 않으면 첫번쨰가 디폴트  
+
+*/
+
 const UserInfoDefaultAssets = () => {
-  // 이 컴포넌트는 assets랑 합칠지 고민중
   const profile = useUserStore((state) => state.profile);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [defaultAssetData, setDefaultAssetData] = useState<Assets | null>(null);
 
+  // change fn
   const handleChangeDefaultAsset = (item: Assets) => {
     console.log('target item ???', item);
     setDefaultAssetData(item);
   };
 
+  // add fn
   const handleClickAddAmount = () => {
     setIsEdit((prev) => !prev);
   };
 
+  // submit fn
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
@@ -53,12 +60,15 @@ const UserInfoDefaultAssets = () => {
     }
   };
 
+  if (profile?.assets === null) return;
+
   return (
     <div>
       {isEdit ? (
+        // edit mode
         <>
           <form onSubmit={handleSubmit}>
-            {profile?.assets.map((item) => (
+            {profile?.assets?.map((item) => (
               <button key={item.id} type="button" onClick={() => handleChangeDefaultAsset(item)}>
                 <span>
                   {item.bank.map((item) => item.bank).join('/')} - {item.name}
@@ -68,17 +78,24 @@ const UserInfoDefaultAssets = () => {
             ))}
 
             <div>
-              선택됨 :{defaultAssetData?.bank.map((item) => item.bank).join('/')}
-              {defaultAssetData?.name}
-              {/* {defaultAssetData?.default === true } */}
+              <>
+                선택됨 : {defaultAssetData?.bank?.map((item) => item.bank).join('/')}
+                {defaultAssetData?.name}
+              </>
             </div>
             <button type="submit">등록하기</button>
           </form>
         </>
       ) : (
         <div>
-          선택됨 :{defaultAssetData?.bank.map((item) => item.bank).join('/')}
-          {defaultAssetData?.name}
+          {profile?.assets === null ? (
+            <span>0개</span>
+          ) : (
+            <>
+              설정된 항목:{profile?.default_asset?.bank?.map((item) => item.bank)} -{' '}
+              {profile?.default_asset?.name}
+            </>
+          )}
         </div>
       )}
       {/* {defaultAssets ? defaultAssets : <span>기본 설정된 카드가 없습니다</span>} */}

@@ -89,11 +89,11 @@ export const changeDate = (totalNumber: number, viewTime: string) => {
 
 /**
  * 게시물에 들어가는 날짜 변환
- * @param {number} date - 변환하고 싶은 날짜
+ * @param {number | string} date - 변환하고 싶은 날짜
  * @param {string} viewTime - case: year, month, day, hour, minute, second ~까지
  * @returns {string} date object
  */
-export const changeViewDate = (date: number, viewTime: string) => {
+export const changeViewDate = (date: number | string, viewTime: string) => {
   const year = new Date(date).getFullYear();
   const month = new Date(date).getMonth() + 1;
   const day = new Date(date).getDate();

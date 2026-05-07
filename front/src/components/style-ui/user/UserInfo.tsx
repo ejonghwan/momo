@@ -19,6 +19,8 @@ const UserInfo = () => {
   const profile = useUserStore((state) => state.profile);
   const isInitialized = useUserStore((state) => state.isInitialized);
 
+  const datetest = (str: string) => new Date(str).toDateString();
+
   if (!isInitialized) {
     return (
       <div className="loading-container">
@@ -71,17 +73,25 @@ const UserInfo = () => {
             <div>
               셀프 카테고리 : <UserInfoSelfCategory categorys={profile?.self_categorys} />
             </div>
+            <hr />
+            <br />
+            <hr />
             <div>
               카드 or 계좌들 : <UserInfoAssets />
             </div>
+            <hr />
+            <br />
+            <hr />
             <div>
               디폴트 : <UserInfoDefaultAssets />
             </div>
+            <hr />
+            <br />
 
             <br />
-            <div>마지막 접속일 : {profile?.last_sign_in}</div>
-            <div>가입일 : {profile?.created_at}</div>
-            <div>개인정보 수정일 : {profile?.updated_at}</div>
+            <div>마지막 접속일 : {datetest(profile?.last_sign_in as string)}</div>
+            <div>가입일 : {datetest(profile?.created_at as string)}</div>
+            <div>개인정보 수정일 : {datetest(profile?.updated_at as string)}</div>
           </div>
         )}
       </>
