@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import clsx from 'clsx';
 
@@ -37,15 +37,18 @@ export const AssetSelectedWrap = ({ selectAsset, setSelectAsset }: AssetSelected
       {/* 여기 유닉키 오류남 */}
       {/* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */}
       ???
-      {profile?.assets?.map((ass) => (
-        <React.Fragment key={ass.id}>
-          <AssetSelectedItem
-            item={ass}
-            handleClickAsset={handleClickAsset}
-            isActive={selectAsset?.some((item) => item.id === ass.id)}
-          />
-        </React.Fragment>
-      ))}
+      {profile?.assets?.map((ass) => {
+        console.log('아 왜 ???????????????????????????????', ass.id);
+        return (
+          <React.Fragment key={ass.id}>
+            <AssetSelectedItem
+              item={ass}
+              handleClickAsset={handleClickAsset}
+              isActive={selectAsset?.some((item) => item.id === ass.id)}
+            />
+          </React.Fragment>
+        );
+      })}
       <div>선택됨: {selectAsset?.map((item) => item.name)}</div>
       {/* {assetsData?.map((item) => (
         <div
