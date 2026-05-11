@@ -100,12 +100,15 @@ const UserInfoAssets = () => {
         /* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */
       }
       if (updatedProfile && profile) {
-        console.log('성공???????????????????', updatedProfile);
-        console.log('성공??????????????????? use profile', profile);
+        console.log('성공??????????????????? updatedProfile', updatedProfile);
+        // console.log('성공??????????????????? use profile', profile);
+
+        const { assetsData, default_assetData } = updatedProfile;
+
         setProfile({
           ...profile,
-          assets: [...profile.assets, updatedProfile[0].assets],
-          default_asset: updatedProfile[0].default_asset,
+          assets: assetsData,
+          default_asset: default_assetData,
         });
         alert(`자산리스트가 변경 되었습니다.`);
         setisEdit((prev) => !prev);
