@@ -16,6 +16,7 @@ import { generateId } from '@/utils/utils';
 const UserInfoAssets = () => {
   const profile = useUserStore((state) => state.profile);
   const setProfile = useUserStore((state) => state.setUserProfile);
+  const setAssets = useUserStore((state) => state.setUserAssets);
 
   const [isEdit, setisEdit] = useState<boolean>(false);
   const [assetsData, setAssetsData] = useState<Assets[]>(profile?.assets || []);
@@ -57,7 +58,7 @@ const UserInfoAssets = () => {
 
   const handleSetDefault = (assId: string) => {
     const setAss = assetsData.filter((item) => item.id === assId);
-    console.log('뭐냐??????????', assId, setAss);
+    // console.log('뭐냐??????????', assId, setAss);
     setDefaultAsset({ ...setAss[0] });
   };
 
@@ -93,23 +94,28 @@ const UserInfoAssets = () => {
         .eq('id', profile?.id)
         .select();
 
+      console.log('newItems?????????????', newItems);
+
       if (error) throw error;
 
       // 성공시
-      {
-        /* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */
-      }
+
+      /* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */
+
       if (updatedProfile && profile) {
         console.log('성공??????????????????? updatedProfile', updatedProfile);
         // console.log('성공??????????????????? use profile', profile);
 
-        const { assetsData, default_assetData } = updatedProfile;
+        const { assets, default_asset } = updatedProfile[0];
 
-        setProfile({
-          ...profile,
-          assets: assetsData,
-          default_asset: default_assetData,
-        });
+        // 받아온 데이터를 넘기는게 아니라 새로 추가된 데이터를 스토어에 넘겨야될듯..
+
+        // setProfile({
+        //   ...profile,
+        //   assets: assets,
+        //   default_asset: default_asset,
+        // });
+        setAssets(assets);
         alert(`자산리스트가 변경 되었습니다.`);
         setisEdit((prev) => !prev);
       }

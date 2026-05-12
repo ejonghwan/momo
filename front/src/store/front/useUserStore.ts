@@ -2,7 +2,7 @@ import { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { UserType } from '@/types/user/UserType';
+import { Assets, UserType } from '@/types/user/UserType';
 
 interface UserState {
   user: User | null;
@@ -10,6 +10,7 @@ interface UserState {
   isInitialized: boolean;
   setUser: (user: User | null) => void;
   setUserProfile: (profile: UserType | null) => void;
+  setUserAssets: (newAssets: Assets | null) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -20,10 +21,33 @@ export const useUserStore = create<UserState>()(
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
       setUserProfile: (profile) => set({ profile, isInitialized: true }),
+      setUserAssets: (newAssets) => {
+        return set((state) => {
+          console.log('set state?????????????????????', state);
+          console.log('set newAssets?????????????????????', newAssets);
+          // return set({ ...state, profile: { ...state.profile, assets: [] } });
+          // return {
+          //   ...state,
+          //   profile: { ...state.profile, assets: state?.profile?.assets.concat(...newAssets) },
+          // };
+          return state;
+        });
+      },
     }),
     { name: 'UserStore' }, // 선택 사항: 데브툴에 표시될 이름
   ),
 );
+
+/*
+
+state는 스토어 객체임 
+setUserAssets: (newAssets) => {
+    return set((state) => {
+      console.log('set state?????????????????????', state);
+      return state;
+    });
+  },
+*/
 
 /*
 **구글 로그인
