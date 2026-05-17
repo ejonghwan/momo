@@ -1,0 +1,34 @@
+.guide__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .guide__header {
+    background-color: var(--blue_100);
+    height: 56rem;
+    flex: 0 0 auto;
+  }
+  .guide__body {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+
+    &__side {
+      flex: 0 0 auto;
+      width: 150rem;
+      overflow-y: scroll;
+      position: fixed;
+      top: 56rem;
+    }
+    &__cont {
+      padding-left: 150rem;
+      border: 2px solid red;
+      width: 100%;
+    }
+  }
+  .guide__footer {
+    flex: 0 0 auto;
+    height: 56rem;
+  }
+}
