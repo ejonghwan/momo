@@ -69,6 +69,6 @@ export const useExpenseStore = create<ExpenseState>()(
       deleteExpense: (id: string) =>
         set((state) => ({ expense: state.expense?.filter((item) => item.id !== id) })),
     }),
-    { name: 'UserStore' },
+    { name: 'ExpenseStore' },
   ),
 );

@@ -58,9 +58,20 @@ const UserInfoAssets = () => {
 
   const handleSetDefault = (assId: string) => {
     const setAss = assetsData.filter((item) => item.id === assId);
-    // console.log('뭐냐??????????', assId, setAss);
+    // default에 추가
     setDefaultAsset({ ...setAss[0] });
+
+    // 백엔드로 보내는 assets 배열에도 default key 수정
+    setAssetsData((prev) =>
+      prev.map((ass) =>
+        ass.id === assId ? { ...ass, default: true } : { ...ass, default: false },
+      ),
+    );
   };
+
+  useEffect(() => {
+    console.log('?????????', assetsData);
+  }, [assetsData]);
 
   // 자산 삭제
   const handleDeleteAsset = (id: string) => {
@@ -110,11 +121,10 @@ const UserInfoAssets = () => {
 
         // 받아온 데이터를 넘기는게 아니라 새로 추가된 데이터를 스토어에 넘겨야될듯..
 
-        // setProfile({
-        //   ...profile,
-        //   assets: assets,
-        //   default_asset: default_asset,
-        // });
+        setProfile({
+          ...profile,
+          default_asset: default_asset,
+        });
         setAssets(assets);
         alert(`자산리스트가 변경 되었습니다.`);
         setisEdit((prev) => !prev);
@@ -165,7 +175,7 @@ const UserInfoAssets = () => {
                     </button>{' '}
                     {'  '}
                     <button type="button" onClick={() => handleSetDefault(ass.id)}>
-                      default
+                      <span style={{ color: ass.default ? 'red' : 'black' }}>default</span>
                     </button>
                   </span>
                 ))}

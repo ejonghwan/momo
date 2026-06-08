@@ -26,7 +26,7 @@ export interface UserType {
   provider: string;
   role: 'admin' | 'manager' | 'user';
   self_categorys: Categorys[]; // 자주 쓰는 카테고리 추가. 글 작성 시 category를 합성해서 화면에 뿌린다음 유저가 선택한 글category db에 저장
-  assets: Assets[]; // 자산. 카드 or 계좌
+  assets: Assets[] | null; // 자산. 카드 or 계좌
   default_asset: Assets; // 기본선택한 카드 or 계좌
 
   last_sign_in: string;

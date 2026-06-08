@@ -1,4 +1,5 @@
 import { User } from '@supabase/supabase-js';
+import { assert, profile } from 'console';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -10,7 +11,7 @@ interface UserState {
   isInitialized: boolean;
   setUser: (user: User | null) => void;
   setUserProfile: (profile: UserType | null) => void;
-  setUserAssets: (newAssets: Assets | null) => void;
+  setUserAssets: (newAssets: Assets[] | null) => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -21,20 +22,20 @@ export const useUserStore = create<UserState>()(
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
       setUserProfile: (profile) => set({ profile, isInitialized: true }),
-      setUserAssets: (newAssets) => {
-        return set((state) => {
-          console.log('set state?????????????????????', state);
-          console.log('set newAssets?????????????????????', newAssets);
-          // return set({ ...state, profile: { ...state.profile, assets: [] } });
-          // return {
-          //   ...state,
-          //   profile: { ...state.profile, assets: state?.profile?.assets.concat(...newAssets) },
-          // };
-          return state;
-        });
-      },
+      // setUserAssets: (newAssets) => {
+      //   return set((state) => {
+      //     if (state.profile) {
+      //       return { profile: { ...state.profile, assets: newAssets } };
+      //     } else {
+      //       return {};
+      //     }
+      //   });
+      // },
+      // 여기해야댐 은행 초기화
+      setUserAssets: (newAssets) =>
+        set((state) => (state.profile ? { profile: { ...state.profile, assets: newAssets } } : {})),
     }),
-    { name: 'UserStore' }, // 선택 사항: 데브툴에 표시될 이름
+    { name: 'UserStore' },
   ),
 );
 
