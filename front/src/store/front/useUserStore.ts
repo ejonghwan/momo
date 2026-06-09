@@ -22,16 +22,6 @@ export const useUserStore = create<UserState>()(
       isInitialized: false,
       setUser: (user) => set({ user, isInitialized: true }),
       setUserProfile: (profile) => set({ profile, isInitialized: true }),
-      // setUserAssets: (newAssets) => {
-      //   return set((state) => {
-      //     if (state.profile) {
-      //       return { profile: { ...state.profile, assets: newAssets } };
-      //     } else {
-      //       return {};
-      //     }
-      //   });
-      // },
-      // 여기해야댐 은행 초기화
       setUserAssets: (newAssets) =>
         set((state) => (state.profile ? { profile: { ...state.profile, assets: newAssets } } : {})),
     }),

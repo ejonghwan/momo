@@ -9,10 +9,6 @@ import { supabaseClient } from '@/store/supabase/client';
 import { Assets, Banks } from '@/types/user/UserType';
 import { generateId } from '@/utils/utils';
 
-// interface Props {
-//   assets: Assets[] | undefined;
-// }
-
 const UserInfoAssets = () => {
   const profile = useUserStore((state) => state.profile);
   const setProfile = useUserStore((state) => state.setUserProfile);
@@ -69,10 +65,6 @@ const UserInfoAssets = () => {
     );
   };
 
-  useEffect(() => {
-    console.log('?????????', assetsData);
-  }, [assetsData]);
-
   // 자산 삭제
   const handleDeleteAsset = (id: string) => {
     if (profile?.default_asset?.id === id) alert('기본 설정된 자산이 리스트에서 삭제됩니다.');
@@ -90,8 +82,13 @@ const UserInfoAssets = () => {
       const totalLen = [...assetsData, ...newItems].length; // 기존 카테고리와 추가된 카테고리 총 렝스
 
       // 새로운 아이템이 추가되지 않거나 기존이랑 같으면 변경하지않음
-      if (newItems.length <= 0 && oldAssets.length === totalLen)
-        return alert('추가된 자산이 없습니다.');
+      if (
+        newItems.length <= 0 &&
+        oldAssets.length === totalLen &&
+        profile?.default_asset.id === defaultAsset?.id
+      ) {
+        return alert('변경되지 않았습니다');
+      }
 
       // 디폴트 설정안하면 첫번째께 디폴트로 자동저장
       // if(!defaultAsset) return alert("기본 자산을 설정해주세요")
@@ -105,28 +102,18 @@ const UserInfoAssets = () => {
         .eq('id', profile?.id)
         .select();
 
-      console.log('newItems?????????????', newItems);
-
       if (error) throw error;
 
       // 성공시
-
-      /* 그리고 에셋 수정 추가 스토어 업데이트 안되는 이유  */
-
       if (updatedProfile && profile) {
-        console.log('성공??????????????????? updatedProfile', updatedProfile);
-        // console.log('성공??????????????????? use profile', profile);
-
         const { assets, default_asset } = updatedProfile[0];
-
-        // 받아온 데이터를 넘기는게 아니라 새로 추가된 데이터를 스토어에 넘겨야될듯..
-
         setProfile({
           ...profile,
           default_asset: default_asset,
         });
         setAssets(assets);
         alert(`자산리스트가 변경 되었습니다.`);
+        setSelectedBank([]);
         setisEdit((prev) => !prev);
       }
     } catch (error) {
@@ -136,12 +123,13 @@ const UserInfoAssets = () => {
   };
 
   useEffect(() => {
-    console.log('assetsData???????', assetsData);
+    console.log(assetsData);
   }, [assetsData]);
 
   return (
     <div>
       {isEdit ? (
+        // 수정
         <>
           {assetsData?.map((item, key) => (
             <span key={key} className={item.default ? 'select' : ''}>
@@ -206,11 +194,17 @@ const UserInfoAssets = () => {
           )}
         </>
       ) : (
+        // 리스트
         <>
           {assetsData?.length && assetsData.length > 0 ? (
             <>
               {assetsData?.map((item, key) => (
-                <span key={key} className={item.default ? 'select' : ''}>
+                <span
+                  key={key}
+                  // 임시
+                  style={{ border: item.default ? '1px solid red' : '' }}
+                  className={item.default ? 'select' : ''}
+                >
                   <span>{item.bank.map((item) => item.bank)}</span> -<span>{item.name}</span>
                 </span>
               ))}
