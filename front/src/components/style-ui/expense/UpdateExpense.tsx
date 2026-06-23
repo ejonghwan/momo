@@ -1,6 +1,14 @@
 'use client';
 
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useCallback, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import { format } from 'date-fns';
 
@@ -121,6 +129,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
           changedFields[key] = newValue as any;
         }
       }
+
       // 날짜만 예외 비교 처리
       else if (key === 'date') {
         // DB의 긴 문자열과 state의 짧은 문자열을 모두 yyyy-MM-dd로 통일해서 비교
@@ -132,6 +141,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
           changedFields[key] = newValue as any;
         }
       }
+
       // 나머지 비교
       else if (newValue !== oldValue) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -141,6 +151,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
 
     console.log('update query Fields::::::::::::::::::::::', changedFields);
 
+    // 변경사항 있는지 체크
     if (
       Object.keys(changedFields).length === 0 &&
       selectAsset.some((selectAss) => selectAss.id === item.assets[0].id)
@@ -151,6 +162,7 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
 
     const payload = {
       ...changedFields,
+      assets: selectAsset,
       user_id: user.id,
       updated_at: new Date().toISOString(),
     };
@@ -173,6 +185,10 @@ const UpdateExpense = ({ item, setIsEdit }: Props) => {
       setIsEdit(false);
     }
   };
+
+  useEffect(() => {
+    console.log('selectAsset??', selectAsset);
+  }, [selectAsset]);
 
   return (
     <div style={{ border: '10rem solid yellow' }}>

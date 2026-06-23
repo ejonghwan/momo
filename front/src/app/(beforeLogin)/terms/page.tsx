@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { User } from '@supabase/supabase-js'; // Supabase 제공 타입 임포트
 
+import { DEFAULT_CATEGORIES } from '@/constants/category';
+
 export default function TermsPage() {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createBrowserClient(
@@ -40,6 +42,7 @@ export default function TermsPage() {
       created_at: user.created_at,
       updated_at: user.updated_at,
       last_sign_in: user.last_sign_in_at,
+      self_categorys: DEFAULT_CATEGORIES,
     });
 
     if (!error) window.location.href = '/';

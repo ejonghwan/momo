@@ -7,6 +7,7 @@ import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
 import UserAvatar from '@/components/style-ui/user/UserAvatar';
 import UserInfoSelfCategory from '@/components/style-ui/user/UserInfoSelfCategory';
+import UserSignout from '@/components/style-ui/user/UserSignout';
 import { useUserStore } from '@/store/front/useUserStore';
 
 import UserInfoAssets from './UserInfoAssets';
@@ -92,6 +93,9 @@ const UserInfo = () => {
             <div>마지막 접속일 : {datetest(profile?.last_sign_in as string)}</div>
             <div>가입일 : {datetest(profile?.created_at as string)}</div>
             <div>개인정보 수정일 : {datetest(profile?.updated_at as string)}</div>
+            <div>
+              <UserSignout />
+            </div>
           </div>
         )}
       </>

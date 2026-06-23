@@ -188,7 +188,21 @@ const CreateExpense = () => {
           {/* // expense db assets 추가 query 필요 */}
         </div>
         <label>카테고리</label>
-        {categories.map((cat) => (
+        {/* {categories.map((cat) => (
+          <label key={cat.id} style={{ marginRight: '8px' }}>
+            <input
+              type="checkbox"
+              name="categorys"
+              value={cat.id}
+              data-name={cat.name} // name을 가져오기 위한 트릭
+              checked={(createExpense.categorys as Categorys[])?.some((c) => c.id === cat.id)}
+              onChange={handleChangeExpense}
+            />
+            {cat.name}
+          </label>
+        ))} */}
+        {/* 가입할때부터 카테고리 그냥 프로필에 저장 후 커스텀 할 수 있게 */}
+        {profile?.self_categorys.map((cat) => (
           <label key={cat.id} style={{ marginRight: '8px' }}>
             <input
               type="checkbox"
