@@ -1,7 +1,10 @@
 'use client';
 
+import { ChangeEvent, useState } from 'react';
+
 import clsx from 'clsx';
 
+import { TextField } from '@/components/style-ui/common/UxInput';
 import LoginButton from '@/components/style-ui/user/LoginButton';
 import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
@@ -19,6 +22,11 @@ const UserInfo = () => {
   const user = useUserStore((state) => state.user);
   const profile = useUserStore((state) => state.profile);
   const isInitialized = useUserStore((state) => state.isInitialized);
+
+  const [testtt, setTesttt] = useState('');
+  const handleChangeTT = (e: ChangeEvent<HTMLInputElement>) => {
+    setTesttt(e.target.value);
+  };
 
   const datetest = (str: string) => new Date(str).toDateString();
 
@@ -44,12 +52,18 @@ const UserInfo = () => {
   if (isInitialized && user) {
     return (
       <>
+        <div>
+          <p>input test</p>
+          <TextField type="text" value={testtt} onChange={(e) => handleChangeTT(e)} />
+        </div>
+
         <div>user info</div>
         {user.user_metadata?.avatar_url && (
           <div className={style['user__info__wrap']}>
             {/* <Skeleton width={"50px"} height={"50px"} borderRadius={"50%"} /> */}
             <div>{user && <LogoutButton />}</div>
             {/* <img src={user.user_metadata.avatar_url} alt="profile" width={50} /> */}
+
             <UserAvatar
               avatartUrl={user.user_metadata.avatar_url}
               nextImgHeight="50rem"

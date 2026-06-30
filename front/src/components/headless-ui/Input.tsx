@@ -1,16 +1,16 @@
 import React, { InputHTMLAttributes } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: React.HTMLInputTypeAttribute;
   value?: string;
   checked?: boolean | undefined;
-  onChange?: (e: React.ChangeEvent) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ value, checked, ...props }: InputProps) => {
+const Input = ({ value, checked, onChange, ...props }: InputProps) => {
   return (
     <>
-      <input value={value} checked={checked} {...props} />
+      <input value={value} checked={checked} {...props} onChange={onChange} />
     </>
   );
 };
