@@ -41,4 +41,5 @@ TextField.displayName = TEXT_FIELD;
 
 /** ------------------------------------------------------------------- */
 
-export { TextField };
+const Root = TEXT_FIELD;
+export { Root };
