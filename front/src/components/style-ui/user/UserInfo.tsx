@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 
 import clsx from 'clsx';
 
-import { TextField } from '@/components/style-ui/common/UxInput';
+import UxTextField from '@/components/style-ui/common/UxTextField';
 import LoginButton from '@/components/style-ui/user/LoginButton';
 import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
@@ -54,7 +54,8 @@ const UserInfo = () => {
       <>
         <div>
           <p>input test</p>
-          <TextField type="text" value={testtt} onChange={(e) => handleChangeTT(e)} />
+          {/* value={testtt} onChange={(e) => handleChangeTT(e)} */}
+          <UxTextField />
         </div>
 
         <div>user info</div>

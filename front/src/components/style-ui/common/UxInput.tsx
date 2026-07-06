@@ -1,45 +1,19 @@
-import React from 'react';
+import { Input } from '@/components/headless-ui';
 
-import Input, { InputProps } from '@/components/headless-ui/Input';
-import { InputContextProvider } from '@/context/InputProvider';
-
-/** ------------------------------------------------------------------- */
-
-interface TextFieldRootProps extends InputProps {
-  type: React.HTMLInputTypeAttribute;
-  value?: string;
+interface UxInputProps {
+  props: any;
 }
-const TEXT_FIELD_ROOT = 'TextFieldRoot';
 
-const TextFieldRoot = (props: TextFieldRootProps) => {
+const UxInput = ({ ...props }: UxInputProps) => {
   return (
-    <InputContextProvider>
-      <Input {...props} />
-    </InputContextProvider>
+    <>
+      {/* <Input.Root type={type}>
+        <Input.Wrap>
+          
+        </Input.Wrap>
+      </Input.Root> */}
+    </>
   );
 };
 
-TextFieldRoot.displayName = TEXT_FIELD_ROOT;
-
-/** ------------------------------------------------------------------- */
-
-interface TextFieldProps extends InputProps {
-  type: React.HTMLInputTypeAttribute;
-  value?: string;
-}
-const TEXT_FIELD = 'TextField';
-
-const TextField = (props: TextFieldProps) => {
-  return (
-    <InputContextProvider>
-      <TextFieldRoot {...props} />
-    </InputContextProvider>
-  );
-};
-
-TextField.displayName = TEXT_FIELD;
-
-/** ------------------------------------------------------------------- */
-
-const Root = TEXT_FIELD;
-export { Root };
+export default UxInput;
