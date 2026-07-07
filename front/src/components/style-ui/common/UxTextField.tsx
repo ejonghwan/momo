@@ -1,15 +1,18 @@
+import { ChangeEvent } from 'react';
+
 import { Input, TextField } from '@/components/headless-ui';
 
 interface UxTextFieldProps {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   message: {
-    className: string;
+    className?: string;
     children: React.ReactNode;
-    isError: boolean;
   };
 }
 
 const UxTextField = ({ message }: UxTextFieldProps) => {
-  const { isError, children, className } = message;
+  const { children: msgChildren, className } = message;
 
   return (
     <>
@@ -18,9 +21,7 @@ const UxTextField = ({ message }: UxTextFieldProps) => {
         <TextField.Wrap>
           <Input.Root />
           {/* <Test /> */}
-          <TextField.Message isError={isError} className={className}>
-            {children}
-          </TextField.Message>
+          <TextField.Message className={className}>{msgChildren}</TextField.Message>
         </TextField.Wrap>
       </TextField.Root>
     </>

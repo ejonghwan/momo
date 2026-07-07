@@ -14,6 +14,7 @@ const TEXT_FIELD_ROOT = 'TextFieldRoot';
 // const TextFieldRoot = (props: TextFieldRootProps) => {
 const TextFieldRoot = ({ children }: TextFieldRootProps) => {
   return (
+    // maxLength={}
     <InputContextProvider>
       <>{children}</>
     </InputContextProvider>
@@ -40,13 +41,16 @@ interface TextFieldMassage {
   children: React.ReactNode;
   uiType?: 'error' | 'sub__text';
   className?: string;
-  isError: boolean;
 }
 
 const TEXT_FIELD_MESSAGE = 'TextFieldMessage';
 
 const TextFieldMassage = ({ children, uiType, className }: TextFieldMassage) => {
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={className}>
+      {uiType} / {children}
+    </div>
+  );
 };
 
 TextFieldMassage.displayName = TEXT_FIELD_MESSAGE;

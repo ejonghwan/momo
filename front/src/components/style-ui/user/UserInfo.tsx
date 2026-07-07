@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Children, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -55,7 +55,13 @@ const UserInfo = () => {
         <div>
           <p>input test</p>
           {/* value={testtt} onChange={(e) => handleChangeTT(e)} */}
-          <UxTextField />
+          <UxTextField
+            value={testtt}
+            onChange={(e) => handleChangeTT(e)}
+            message={{
+              children: <>asdasd</>,
+            }}
+          />
         </div>
 
         <div>user info</div>

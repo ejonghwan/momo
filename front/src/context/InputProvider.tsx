@@ -1,13 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
 
-/*
-
-1. crx, useProvider, ContextProvider 생성
-2. 
-
-*/
-
-interface InputContextType {}
+export interface InputContextType {
+  value: string;
+  count: number | string;
+  setValue: Dispatch<SetStateAction<string>>;
+  setCount: Dispatch<SetStateAction<number | string>>;
+  currentLen: number;
+}
 
 interface InputContextProviderType {
   children: React.ReactNode;
