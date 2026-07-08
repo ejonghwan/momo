@@ -1,11 +1,17 @@
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 export interface InputContextType {
   value: string;
   count: number | string;
   setValue: Dispatch<SetStateAction<string>>;
   setCount: Dispatch<SetStateAction<number | string>>;
-  currentLen: number;
 }
 
 interface InputContextProviderType {
@@ -23,9 +29,18 @@ export const useInputProvider = () => {
 export const InputContextProvider = ({ children }: InputContextProviderType) => {
   const [value, setValue] = useState<string>('');
   const [count, setCount] = useState<number | string>(0);
-  return (
-    <InputContext.Provider value={{ value, count, setValue, setCount, currentLen: value.length }}>
-      {children}
-    </InputContext.Provider>
+
+  const handleIncCount = () => {
+    setCount(value.length);
+  };
+
+  const contextValue = useMemo(
+    () => ({ value, count, setValue, setCount }),
+    [value, count, setValue, setCount],
   );
+
+  console.log('context val?', value);
+  console.log('context count?', count);
+
+  return <InputContext.Provider value={contextValue}>{children}</InputContext.Provider>;
 };

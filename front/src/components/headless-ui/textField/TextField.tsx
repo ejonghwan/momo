@@ -25,10 +25,17 @@ TextFieldRoot.displayName = TEXT_FIELD_ROOT;
 
 /** ------------------------------------------------------------------- */
 
+interface TextFieldWrapProps {
+  children: React.ReactNode;
+  className?: string;
+  as?: React.ElementType;
+}
+
 const TEXT_FIELD_WRAP = 'TextFieldWrap';
 
-const TextFieldWrap = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
+const TextFieldWrap = ({ children, as, className }: TextFieldWrapProps) => {
+  const Component = as || 'div';
+  return <Component className={className}>{children}</Component>;
 };
 
 TextFieldWrap.displayName = TEXT_FIELD_WRAP;

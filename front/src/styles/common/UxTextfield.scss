@@ -1,0 +1,19 @@
+@use '@/styles/helper/variables' as *;
+
+// .textfield__wrap {
+//   border: 1px solid red;
+// }
+
+.textfield {
+  // border: 1px solid red;
+  &--default {
+  }
+  &--outline {
+  }
+  &--solid {
+    border: 1px solid yellowgreen;
+  }
+  &--search {
+    border: 1px solid blue;
+  }
+}

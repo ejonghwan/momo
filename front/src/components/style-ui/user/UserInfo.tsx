@@ -54,9 +54,10 @@ const UserInfo = () => {
       <>
         <div>
           <p>input test</p>
-          {/* value={testtt} onChange={(e) => handleChangeTT(e)} */}
           <UxTextField
             value={testtt}
+            variant={'search'}
+            size={'xsmall'}
             onChange={(e) => handleChangeTT(e)}
             message={{
               children: <>asdasd</>,
