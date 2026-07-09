@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   createContext,
   Dispatch,
   SetStateAction,
@@ -32,6 +33,10 @@ export const InputContextProvider = ({ children }: InputContextProviderType) => 
 
   const handleIncCount = () => {
     setCount(value.length);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
   const contextValue = useMemo(

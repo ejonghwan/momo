@@ -56,7 +56,8 @@ const UserInfo = () => {
           <p>input test</p>
           <UxTextField
             value={testtt}
-            variant={'search'}
+            variant={'solid'}
+            uiType={'text'}
             size={'xsmall'}
             onChange={(e) => handleChangeTT(e)}
             message={{
