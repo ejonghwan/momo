@@ -54,8 +54,8 @@ const textFieldVariants = cva('textfield', {
 interface TextFieldProps
   extends Omit<HTMLAttributes<HTMLElement>, 'color'>, VariantProps<typeof textFieldVariants> {
   as?: ElementType;
-  children: string | React.ReactNode;
-  placeHolder: string;
+  // children?: string | React.ReactNode;
+  placeHolder?: string;
   uiType: 'text' | 'search' | 'icon' | 'number' | 'button' | 'password';
 }
 
