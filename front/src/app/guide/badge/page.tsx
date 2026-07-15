@@ -4,7 +4,7 @@ const Badge = () => {
   return (
     <>
       <div>
-        <h1>Badge type1</h1>
+        <h1 className="">Badge type1</h1>
         <UxBadgeWrap>
           <UxBadge size="xsmall" bgColor="bg_grey_100" txtColor="blue" variant="default">
             xsmall

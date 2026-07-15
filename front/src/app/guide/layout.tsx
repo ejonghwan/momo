@@ -11,8 +11,11 @@ const GuidePage = ({ children }: { children: React.ReactNode }) => {
         <div className={style['guide__body__side']}>
           <Link href="/guide/text">Text</Link>
           <Link href="/guide/color">Color</Link>
+          <Link href="/guide/badge">Badge</Link>
         </div>
-        <div className={style['guide__body__cont']}>{children}</div>
+        <div className={style['guide__body__wrap']}>
+          <div className={style['guide__body__cont']}>{children}</div>
+        </div>
       </div>
 
       <div className={style['guide__footer']}>footer</div>
