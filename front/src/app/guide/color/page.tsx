@@ -1,5 +1,3 @@
-import { Span } from 'next/dist/trace';
-
 import clsx from 'clsx';
 
 import { UxText } from '@/components/style-ui/common/UxText';
