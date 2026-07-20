@@ -116,6 +116,14 @@
   /* ## Background */
   --bg_white: #{$bg_white};
   --bg_gray: #{$bg_gray};
+
+  // ## 제외 케이스
+  --primary: #{$primary}; //#3182F6
+  --primary_opa16: #{$primary_opa16}; //#3182F6
+
+  --danger: #{$danger}; //#fe1023
+  --dark: #{$dark}; //#4E5968
+  --light: #{$light}; //#3182F6
 }
 
 /* 다크모드 설정 */

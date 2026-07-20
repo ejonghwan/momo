@@ -7,41 +7,64 @@ import { UrlObject } from 'url';
 
 import { cn } from '@/components/style-ui/common/btn1';
 
-const buttonVariants = cva('disabled:pointer-events-none text-black', {
+import '@/styles/common/UxButton.scss';
+
+const buttonVariants = cva('disabled:pointer-events-none text-black button', {
   variants: {
     variant: {
-      color: '',
-      text: '',
-      arrow: '',
-      border: '',
-      none: '',
+      fill: 'button--fill',
+      arrow: 'button--arrow',
+      text: 'button--text',
+      border: 'button--border',
+      none: 'button--none',
     },
     size: {
-      xlarge: 'button__xlarge',
-      large: 'button__large',
-      medium: 'button__medium',
-      small: 'button__small',
-      none: 'button__none',
+      xlarge: 'button--xlarge',
+      large: 'button--large',
+      medium: 'button--medium',
+      small: 'button--small',
+      none: 'button--none',
     },
     state: {
-      loading: 'button__loading',
+      default: '',
+      loading: 'button--loading',
     },
-    disabled: {},
+    _color: {
+      primary: 'button--primary',
+      danger: 'button--danger',
+      light: 'button--light',
+      dark: 'button--dark',
+    },
+    display: {
+      inline: 'button--inline',
+      block: 'button--block',
+      full: 'button--full',
+    },
   },
   defaultVariants: {
     variant: 'none',
     size: 'medium',
+    state: 'default',
   },
 });
 
 interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   variant?: VariantProps<typeof buttonVariants>['variant'];
   size?: VariantProps<typeof buttonVariants>['size'];
+  state?: VariantProps<typeof buttonVariants>['state'];
+  display?: VariantProps<typeof buttonVariants>['display'];
+  _color?: VariantProps<typeof buttonVariants>['_color'];
+  // display?: 'inline' | 'block' | 'full';
+  // color?: 'primary' | 'danger' | 'light' | 'dark';
   as?: string;
   href?: string | UrlObject;
   children: React.ReactNode;
-  desabled?: boolean;
   type?: 'button' | 'submit';
+  ariaLabel?: string;
+  desabled?: boolean;
+  loading?: boolean;
+  className?: string;
+  handleClick?: () => void;
 }
 
 const UxButton = ({
@@ -51,18 +74,23 @@ const UxButton = ({
   size,
   as = 'button',
   href = '/',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   type = 'button',
-  disabled,
+  disabled = false,
+  state,
+  _color,
+  display,
+  handleClick,
   ...props
 }: ButtonProps) => {
   // button
   if (as === 'button') {
     return (
       <button
-        type="button"
+        type={type}
         disabled={disabled}
-        className={cn(buttonVariants({ variant, size, className, disabled }))}
+        onClick={handleClick}
+        className={cn(buttonVariants({ variant, size, className, state, display, _color }))}
         {...props}
       >
         {children}
@@ -75,7 +103,8 @@ const UxButton = ({
     return (
       <Link
         href={href ?? '/'}
-        className={cn(buttonVariants({ variant, size, className, disabled }))}
+        className={cn(buttonVariants({ variant, size, className, state, display, _color }))}
+        onClick={handleClick}
       >
         {children}
       </Link>

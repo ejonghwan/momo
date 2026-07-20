@@ -1,0 +1,73 @@
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+
+.button {
+  // 공통
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg-white);
+  border: none;
+  background-color: var(--bg-white);
+  border-radius: 16rem;
+
+  // variant
+  &--fill {
+  }
+  &--arrow {
+  }
+  &--text {
+  }
+  &--border {
+  }
+  &--none {
+  }
+
+  //   size
+  &--xlarge {
+    min-width: 96rem;
+    min-height: 56rem;
+  }
+  &--large {
+    min-width: 80rem;
+    min-height: 48rem;
+  }
+  &--medium {
+    min-width: 64rem;
+    min-height: 38rem;
+  }
+  &--small {
+    min-width: 32rem;
+    min-height: 16rem;
+  }
+  &--none {
+    min-width: inherit;
+    min-height: inherit;
+  }
+
+  //   state
+  &--loading {
+  }
+
+  //   _color
+  &--primary {
+  }
+  &--danger {
+  }
+  &--light {
+  }
+  &--dark {
+  }
+
+  //   display
+  &--inline {
+    display: inline;
+  }
+  &--block {
+    display: block;
+  }
+  &--full {
+    display: block;
+    width: 100%;
+  }
+}
