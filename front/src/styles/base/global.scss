@@ -5,6 +5,10 @@
 @use '@/styles/base/_datePicker.scss'; // 데이트피커 라이브러리 초기화
 
 :root {
+  // test
+  --size: 32rem;
+  --speed: 1;
+
   /* ## Grey */
   --grey_50: #{$grey_50};
   --grey_100: #{$grey_100};
@@ -114,16 +118,15 @@
   --purple_900: #{$purple_900};
 
   /* ## Background */
-  --bg_white: #{$bg_white};
-  --bg_gray: #{$bg_gray};
+  --white: #{$white};
+  --gray: #{$gray};
 
   // ## 제외 케이스
   --primary: #{$primary}; //#3182F6
   --primary_opa16: #{$primary_opa16}; //#3182F6
-
   --danger: #{$danger}; //#fe1023
   --dark: #{$dark}; //#4E5968
-  --light: #{$light}; //#3182F6
+  --light: #{$light}; //#e8f2ff
 }
 
 /* 다크모드 설정 */
@@ -143,8 +146,8 @@ html[data-theme='dark'] {
   --grey_900: #{$grey_50};
 
   /* ## Background (다크모드 전용 배경) */
-  --bg_white: #{$grey_900}; // 흰색 배경은 가장 어둡게
-  --bg_gray: #121212; // 기본 회색 배경도 더 깊게
+  --white: #{$grey_900}; // 흰색 배경은 가장 어둡게
+  --gray: #121212; // 기본 회색 배경도 더 깊게
 
   /* ## Blue (다크에선 약간 더 밝은 톤을 메인으로) */
   --blue_500: #{$blue_400};
@@ -236,5 +239,32 @@ body {
 
   .contents-wrapper {
     width: 100%;
+  }
+}
+
+/* 4) Dots Bounce */
+.dots-bounce {
+  display: inline-flex;
+  gap: calc(var(--size) / 6);
+  align-items: flex-end;
+}
+.dots-bounce span {
+  width: calc(var(--size) / 4);
+  height: calc(var(--size) / 4);
+  border-radius: 50%;
+  background: var(--accent);
+  animation: bounce calc(0.9s * var(--speed)) ease-in-out infinite;
+  background-color: white;
+}
+.dots-bounce span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.dots-bounce span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(-40%);
   }
 }

@@ -13,10 +13,16 @@ const buttonVariants = cva('disabled:pointer-events-none text-black button', {
   variants: {
     variant: {
       fill: 'button--fill',
-      arrow: 'button--arrow',
       text: 'button--text',
       border: 'button--border',
+      weak: 'button--weak',
       none: 'button--none',
+    },
+    arrow: {
+      left: 'button--arrow--left',
+      right: 'button--arrow--right',
+      top: 'button--arrow--top',
+      bottom: 'button--arrow--bottom',
     },
     size: {
       xlarge: 'button--xlarge',
@@ -54,6 +60,7 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
   state?: VariantProps<typeof buttonVariants>['state'];
   display?: VariantProps<typeof buttonVariants>['display'];
   _color?: VariantProps<typeof buttonVariants>['_color'];
+  arrow?: VariantProps<typeof buttonVariants>['arrow'];
   // display?: 'inline' | 'block' | 'full';
   // color?: 'primary' | 'danger' | 'light' | 'dark';
   as?: string;
@@ -61,7 +68,7 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
   children: React.ReactNode;
   type?: 'button' | 'submit';
   ariaLabel?: string;
-  desabled?: boolean;
+  disabled?: boolean;
   loading?: boolean;
   className?: string;
   handleClick?: () => void;
@@ -74,12 +81,12 @@ const UxButton = ({
   size,
   as = 'button',
   href = '/',
-
   type = 'button',
   disabled = false,
   state,
   _color,
   display,
+  arrow,
   handleClick,
   ...props
 }: ButtonProps) => {
@@ -90,10 +97,18 @@ const UxButton = ({
         type={type}
         disabled={disabled}
         onClick={handleClick}
-        className={cn(buttonVariants({ variant, size, className, state, display, _color }))}
+        className={cn(buttonVariants({ variant, size, className, state, display, _color, arrow }))}
         {...props}
       >
-        {children}
+        {state === 'loading' ? (
+          <div className="loader dots-bounce" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        ) : (
+          children
+        )}
       </button>
     );
   }
@@ -103,10 +118,10 @@ const UxButton = ({
     return (
       <Link
         href={href ?? '/'}
-        className={cn(buttonVariants({ variant, size, className, state, display, _color }))}
+        className={cn(buttonVariants({ variant, size, className, state, display, _color, arrow }))}
         onClick={handleClick}
       >
-        {children}
+        {state === 'loading' ? <>...loading</> : children}
       </Link>
     );
   }

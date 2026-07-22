@@ -6,20 +6,61 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--bg-white);
+  //   color: var(--bg-white);
   border: none;
-  background-color: var(--bg-white);
+  background-color: var(--light);
   border-radius: 16rem;
+  font-weight: 400;
+  padding: 8rem 10rem;
 
   // variant
   &--fill {
   }
+  &--border {
+    background-color: var(--bg-white);
+    border: 1px solid #ddd;
+  }
   &--arrow {
+    position: relative;
+    padding-right: 20rem;
+    &::after {
+      content: '';
+      display: block;
+      width: 1rem;
+      height: 7rem;
+      background-color: var(--bg-black);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &::before {
+      content: '';
+      display: block;
+      width: 1rem;
+      height: 7rem;
+      background-color: var(--bg-black);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &--top {
+    }
+    &--bottom {
+    }
+    &--right {
+      &::after {
+        transform: rotate(45deg);
+      }
+      &::before {
+        transform: rotate(-45deg);
+      }
+    }
+    &--left {
+    }
   }
   &--text {
   }
-  &--border {
-  }
+
   &--none {
   }
 
@@ -27,18 +68,26 @@
   &--xlarge {
     min-width: 96rem;
     min-height: 56rem;
+    font-size: 17rem;
+    padding: 12rem 24rem;
   }
   &--large {
     min-width: 80rem;
     min-height: 48rem;
+    font-size: 17rem;
+    padding: 11rem 20rem;
   }
   &--medium {
     min-width: 64rem;
     min-height: 38rem;
+    font-size: 15rem;
+    padding: 10rem 16rem;
   }
   &--small {
     min-width: 32rem;
     min-height: 16rem;
+    font-size: 13rem;
+    padding: 9rem 16rem;
   }
   &--none {
     min-width: inherit;
@@ -51,12 +100,20 @@
 
   //   _color
   &--primary {
+    background-color: var(--primary);
+    color: var(--white);
   }
   &--danger {
+    background-color: var(--danger);
+    color: var(--white);
   }
   &--light {
+    background-color: var(--light);
+    color: var(--gray);
   }
   &--dark {
+    background-color: var(--dark);
+    color: var(--white);
   }
 
   //   display
