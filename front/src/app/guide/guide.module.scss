@@ -91,3 +91,22 @@
     }
   }
 }
+
+// ############################### button
+// ############################### button
+// ############################### button
+
+.g__button {
+  // &__wrap {}
+  &__item {
+    > h2 {
+      width: 100%;
+      margin-bottom: 5rem;
+    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5rem;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}

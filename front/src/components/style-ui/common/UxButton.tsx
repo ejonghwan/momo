@@ -1,4 +1,4 @@
-import { Children, ComponentProps, ReactNode } from 'react';
+import React, { Children, ComponentProps, ReactNode } from 'react';
 import Link, { LinkProps } from 'next/link';
 
 import { cva, VariantProps } from 'class-variance-authority';
@@ -48,9 +48,12 @@ const buttonVariants = cva('disabled:pointer-events-none text-black button', {
     },
   },
   defaultVariants: {
-    variant: 'none',
+    variant: 'fill',
+    arrow: 'right',
     size: 'medium',
     state: 'default',
+    _color: 'primary',
+    display: 'full',
   },
 });
 
@@ -71,7 +74,7 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
   disabled?: boolean;
   loading?: boolean;
   className?: string;
-  handleClick?: () => void;
+  handleClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }
 
 const UxButton = ({
@@ -90,14 +93,33 @@ const UxButton = ({
   handleClick,
   ...props
 }: ButtonProps) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    // e.preventDefault();
+
+    handleClick?.(e);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget?.classList.add('button--mouse-down');
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget?.classList.remove('button--mouse-down');
+  };
+
   // button
   if (as === 'button') {
     return (
       <button
         type={type}
         disabled={disabled}
-        onClick={handleClick}
-        className={cn(buttonVariants({ variant, size, className, state, display, _color, arrow }))}
+        onClick={(e) => handleButtonClick(e)}
+        onPointerDown={(e) => handleMouseDown(e)}
+        onPointerUp={(e) => handleMouseUp(e)}
+        className={cn(
+          buttonVariants({ variant, size, className, state, display, _color, arrow }),
+          disabled && 'button--disabeld',
+        )}
         {...props}
       >
         {state === 'loading' ? (
@@ -118,8 +140,11 @@ const UxButton = ({
     return (
       <Link
         href={href ?? '/'}
-        className={cn(buttonVariants({ variant, size, className, state, display, _color, arrow }))}
-        onClick={handleClick}
+        className={cn(
+          buttonVariants({ variant, size, className, state, display, _color, arrow }),
+          disabled && 'button--disabeld',
+        )}
+        onClick={(e) => handleButtonClick(e)}
       >
         {state === 'loading' ? <>...loading</> : children}
       </Link>
