@@ -16,7 +16,6 @@ const buttonVariants = cva('disabled:pointer-events-none text-black button', {
       text: 'button--text',
       border: 'button--border',
       weak: 'button--weak',
-      none: 'button--none',
     },
     arrow: {
       left: 'button--arrow--left',
@@ -29,7 +28,6 @@ const buttonVariants = cva('disabled:pointer-events-none text-black button', {
       large: 'button--large',
       medium: 'button--medium',
       small: 'button--small',
-      none: 'button--none',
     },
     state: {
       default: '',
@@ -74,6 +72,7 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
   disabled?: boolean;
   loading?: boolean;
   className?: string;
+  isPure?: boolean;
   handleClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 }
 
@@ -90,6 +89,7 @@ const UxButton = ({
   _color,
   display,
   arrow,
+  isPure = false,
   handleClick,
   ...props
 }: ButtonProps) => {
@@ -117,7 +117,9 @@ const UxButton = ({
         onPointerDown={(e) => handleMouseDown(e)}
         onPointerUp={(e) => handleMouseUp(e)}
         className={cn(
-          buttonVariants({ variant, size, className, state, display, _color, arrow }),
+          isPure
+            ? 'button--pure'
+            : buttonVariants({ variant, size, className, state, display, _color, arrow }),
           disabled && 'button--disabeld',
         )}
         {...props}

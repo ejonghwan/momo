@@ -13,6 +13,11 @@
   font-weight: 400;
   padding: 8rem 10rem;
 
+  &--pure {
+    background-color: transparent;
+    border: none;
+  }
+
   &--disabeld {
     pointer-events: none;
     position: relative;

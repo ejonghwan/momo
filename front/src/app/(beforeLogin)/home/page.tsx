@@ -51,7 +51,7 @@ const HomePage = async () => {
   return (
     <>
       {/* <TestCompo2 /> */}
-      {/* <UserInfo /> */}
+      <UserInfo />
       {/* <ExpenseItemList /> */}
 
       <br />

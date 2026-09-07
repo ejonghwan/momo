@@ -1,16 +1,19 @@
-import { ChangeEvent, ElementType, HTMLAttributes } from 'react';
+import { ChangeEvent, ElementType, HTMLAttributes, MouseEvent } from 'react';
+import { PiMagnifyingGlass } from 'react-icons/pi';
 
 import { cva, VariantProps } from 'class-variance-authority';
 import clsx from 'clsx';
 
 import { Input, TextField } from '@/components/headless-ui';
 import { cn } from '@/components/style-ui/common/btn1';
+import UxButton from '@/components/style-ui/common/UxButton';
 
 import '@/styles/common/UxTextfield.scss';
 
 interface TextFieldProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
   message: {
     className?: string;
     children: React.ReactNode;
@@ -59,7 +62,7 @@ interface TextFieldProps
   uiType: 'text' | 'search' | 'icon' | 'number' | 'button' | 'password';
 }
 
-const UxTextField = ({ message, variant, size, placeHolder, uiType }: TextFieldProps) => {
+const UxTextField = ({ message, variant, size, placeHolder, uiType, onChange }: TextFieldProps) => {
   const { children: msgChildren, className } = message;
 
   if (uiType === 'text') {
@@ -72,7 +75,7 @@ const UxTextField = ({ message, variant, size, placeHolder, uiType }: TextFieldP
             // className={style['textfield__wrap']}
             className={clsx(cn(textFieldVariants({ variant, size, className }), placeHolder))}
           >
-            <Input.Root />
+            <Input.Root onChange={onChange} />
             <TextField.Message className={className}>{msgChildren}</TextField.Message>
           </TextField.Wrap>
         </TextField.Root>
@@ -90,7 +93,12 @@ const UxTextField = ({ message, variant, size, placeHolder, uiType }: TextFieldP
             // className={style['textfield__wrap']}
             className={clsx(cn(textFieldVariants({ variant, size, className }), placeHolder))}
           >
-            <Input.Root />
+            <div>
+              <Input.Root onChange={onChange} />
+              <UxButton isPure>
+                <PiMagnifyingGlass />
+              </UxButton>
+            </div>
             <TextField.Message className={className}>{msgChildren}</TextField.Message>
           </TextField.Wrap>
         </TextField.Root>

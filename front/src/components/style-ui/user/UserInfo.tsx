@@ -27,6 +27,10 @@ const UserInfo = () => {
   const handleChangeTT = (e: ChangeEvent<HTMLInputElement>) => {
     setTesttt(e.target.value);
   };
+  const [testtt_2, setTesttt_2] = useState('');
+  const handleChangeTT_2 = (e: ChangeEvent<HTMLInputElement>) => {
+    setTesttt_2(e.target.value);
+  };
 
   const datetest = (str: string) => new Date(str).toDateString();
 
@@ -54,14 +58,25 @@ const UserInfo = () => {
       <>
         <div>
           <p>input test</p>
+          {testtt} / {testtt_2}
           <UxTextField
+            uiType={'text'}
             value={testtt}
             variant={'solid'}
-            uiType={'text'}
             size={'xsmall'}
             onChange={(e) => handleChangeTT(e)}
             message={{
-              children: <>asdasd</>,
+              children: <>asdasdbbc</>,
+            }}
+          />
+          <UxTextField
+            uiType={'search'}
+            value={testtt_2}
+            variant={'solid'}
+            size={'xsmall'}
+            onChange={(e) => handleChangeTT_2(e)}
+            message={{
+              children: <>asdasdbbc</>,
             }}
           />
         </div>
