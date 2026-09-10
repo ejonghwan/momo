@@ -1,15 +1,13 @@
-import { User } from '@supabase/supabase-js';
-import { assert, profile } from 'console';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { Assets, UserType } from '@/types/user/UserType';
 
 interface UserState {
-  user: User | null;
+  user: UserType | null;
   profile: UserType | null;
   isInitialized: boolean;
-  setUser: (user: User | null) => void;
+  setUser: (user: UserType | null) => void;
   setUserProfile: (profile: UserType | null) => void;
   setUserAssets: (newAssets: Assets[] | null) => void;
 }

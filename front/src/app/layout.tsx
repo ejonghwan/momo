@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
 
+import { Theme } from '@radix-ui/themes';
+
 import { Providers } from '@/app/Provider';
 import AuthProvider from '@/components/auth/AuthProvider';
 import { fontDefault } from '@/lib/ui/fonts';
 import { getCookieStore } from '@/store/supabase/supabase';
 import DeviceTypeLayout from '@/utils/device-type-layout';
 
+import '@radix-ui/themes/styles.css';
 // import "@/styles/base/reset.scss";
 import '@/styles/base/global.scss';
 
@@ -47,7 +50,9 @@ export default async function RootLayout({
       <body className="">
         <AuthProvider serverUser={user} userProfile={userProfile}>
           <DeviceTypeLayout>
-            <Providers>{children}</Providers>
+            <Theme appearance="dark">
+              <Providers>{children}</Providers>
+            </Theme>
           </DeviceTypeLayout>
         </AuthProvider>
       </body>

@@ -1,10 +1,8 @@
 'use client';
 
-import { ChangeEvent, Children, useState } from 'react';
-
+import { Button, Flex } from '@radix-ui/themes';
 import clsx from 'clsx';
 
-import UxTextField from '@/components/style-ui/common/UxTextField';
 import LoginButton from '@/components/style-ui/user/LoginButton';
 import LoginButtonKaKao from '@/components/style-ui/user/LoginButtonKaKao';
 import LogoutButton from '@/components/style-ui/user/LogoutButton';
@@ -22,15 +20,6 @@ const UserInfo = () => {
   const user = useUserStore((state) => state.user);
   const profile = useUserStore((state) => state.profile);
   const isInitialized = useUserStore((state) => state.isInitialized);
-
-  const [testtt, setTesttt] = useState('');
-  const handleChangeTT = (e: ChangeEvent<HTMLInputElement>) => {
-    setTesttt(e.target.value);
-  };
-  const [testtt_2, setTesttt_2] = useState('');
-  const handleChangeTT_2 = (e: ChangeEvent<HTMLInputElement>) => {
-    setTesttt_2(e.target.value);
-  };
 
   const datetest = (str: string) => new Date(str).toDateString();
 
@@ -56,37 +45,27 @@ const UserInfo = () => {
   if (isInitialized && user) {
     return (
       <>
-        <div>
-          <p>input test</p>
-          {testtt} / {testtt_2}
-          <UxTextField
-            uiType={'text'}
-            value={testtt}
-            variant={'solid'}
-            size={'xsmall'}
-            onChange={(e) => handleChangeTT(e)}
-            message={{
-              children: <>asdasdbbc</>,
-            }}
-          />
-          <UxTextField
-            uiType={'search'}
-            value={testtt_2}
-            variant={'solid'}
-            size={'xsmall'}
-            onChange={(e) => handleChangeTT_2(e)}
-            message={{
-              children: <>asdasdbbc</>,
-            }}
-          />
-        </div>
-
         <div>user info</div>
         {user.user_metadata?.avatar_url && (
           <div className={style['user__info__wrap']}>
             {/* <Skeleton width={"50px"} height={"50px"} borderRadius={"50%"} /> */}
             <div>{user && <LogoutButton />}</div>
             {/* <img src={user.user_metadata.avatar_url} alt="profile" width={50} /> */}
+
+            <Flex gap="3">
+              <Button color="indigo" variant="soft">
+                Edit profile
+              </Button>
+              <Button color="cyan" variant="soft">
+                Edit profile
+              </Button>
+              <Button color="orange" variant="soft">
+                Edit profile
+              </Button>
+              <Button color="crimson" variant="soft">
+                Edit profile
+              </Button>
+            </Flex>
 
             <UserAvatar
               avatartUrl={user.user_metadata.avatar_url}

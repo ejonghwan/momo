@@ -2,7 +2,9 @@
 
 import React from 'react';
 
-import style from 'styled-jsx/style';
+import style from '@/styles/common/Header.module.scss';
+
+// import style from '@/styles/components/'
 
 interface HeaderProps {
   children: React.ReactNode;

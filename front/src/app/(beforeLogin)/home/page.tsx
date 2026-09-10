@@ -1,3 +1,4 @@
+import Header from '@/components/style-ui/common/Header';
 import CreateExpense from '@/components/style-ui/expense/CreateExpense';
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
 // import LoadExpense from '@/components/style-ui/expense/LoadExpense';
@@ -50,6 +51,7 @@ const HomePage = async () => {
 
   return (
     <>
+      <Header>header da</Header>
       {/* <TestCompo2 /> */}
       <UserInfo />
       {/* <ExpenseItemList /> */}
