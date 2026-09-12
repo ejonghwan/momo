@@ -50,9 +50,7 @@ export default async function RootLayout({
       <body className="">
         <AuthProvider serverUser={user} userProfile={userProfile}>
           <DeviceTypeLayout>
-            <Theme appearance="dark">
-              <Providers>{children}</Providers>
-            </Theme>
+            <Providers>{children}</Providers>
           </DeviceTypeLayout>
         </AuthProvider>
       </body>
