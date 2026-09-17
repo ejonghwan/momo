@@ -45,27 +45,11 @@ const UserInfo = () => {
   if (isInitialized && user) {
     return (
       <>
-        <div>user info</div>
         {user.user_metadata?.avatar_url && (
           <div className={style['user__info__wrap']}>
             {/* <Skeleton width={"50px"} height={"50px"} borderRadius={"50%"} /> */}
             <div>{user && <LogoutButton />}</div>
             {/* <img src={user.user_metadata.avatar_url} alt="profile" width={50} /> */}
-
-            <Flex gap="3">
-              <Button color="indigo" variant="soft">
-                Edit profile
-              </Button>
-              <Button color="cyan" variant="soft">
-                Edit profile
-              </Button>
-              <Button color="orange" variant="soft">
-                Edit profile
-              </Button>
-              <Button color="crimson" variant="soft">
-                Edit profile
-              </Button>
-            </Flex>
 
             <UserAvatar
               avatartUrl={user.user_metadata.avatar_url}
@@ -84,35 +68,29 @@ const UserInfo = () => {
               {user.app_metadata.provider?.slice(0, 1).toLocaleUpperCase()}
             </div>
             <div>클래스 : {profile?.role}</div>
-            <div>
+            {/* <div>
               닉네임 :{' '}
               {profile?.nickname ? profile?.nickname : <button type="button">닉네임 설정</button>}
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               셀프 카테고리 : <UserInfoSelfCategory categorys={profile?.self_categorys} />
-            </div>
+            </div> */}
             <hr />
             <br />
             <hr />
-            <div>
-              카드 or 계좌들 : <UserInfoAssets />
-            </div>
+            <div>{/* 카드 or 계좌들 : <UserInfoAssets /> */}</div>
             <hr />
             <br />
             <hr />
-            <div>
-              디폴트 : <UserInfoDefaultAssets />
-            </div>
+            <div>{/* 디폴트 : <UserInfoDefaultAssets /> */}</div>
             <hr />
             <br />
 
             <br />
-            <div>마지막 접속일 : {datetest(profile?.last_sign_in as string)}</div>
+            {/* <div>마지막 접속일 : {datetest(profile?.last_sign_in as string)}</div>
             <div>가입일 : {datetest(profile?.created_at as string)}</div>
-            <div>개인정보 수정일 : {datetest(profile?.updated_at as string)}</div>
-            <div>
-              <UserSignout />
-            </div>
+            <div>개인정보 수정일 : {datetest(profile?.updated_at as string)}</div> */}
+            <div>{/* <UserSignout /> */}</div>
           </div>
         )}
       </>

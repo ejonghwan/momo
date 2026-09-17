@@ -13,12 +13,12 @@ export interface ProvidersProps {
   children: React.ReactNode;
 }
 
-// db에 다크모드 사용자 설정 되어있으면 그거 넣고 아니면 시스템 설정 넣기
-const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 export function Providers({ children }: ProvidersProps) {
   const profile = useUserStore((state) => state.profile);
   // const router = useRouter();
+
+  // db에 다크모드 사용자 설정 되어있으면 그거 넣고 아니면 시스템 설정 넣기
+  const isSystemDarkMode = window?.matchMedia('(prefers-color-scheme: dark)').matches;
 
   const [queryClient] = React.useState(
     () =>
@@ -33,7 +33,9 @@ export function Providers({ children }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme appearance={(profile?.darkmode ?? isDarkMode) ? 'dark' : 'light'}>{children}</Theme>
+      <Theme appearance={(profile?.darkmode ?? isSystemDarkMode) ? 'dark' : 'light'}>
+        {children}
+      </Theme>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

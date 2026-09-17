@@ -51,9 +51,9 @@ const HomePage = async () => {
 
   return (
     <>
-      <Header>header da</Header>
+      <Header uiType="main" />
       {/* <TestCompo2 /> */}
-      <UserInfo />
+      {/* <UserInfo /> */}
       {/* <ExpenseItemList /> */}
 
       <br />
