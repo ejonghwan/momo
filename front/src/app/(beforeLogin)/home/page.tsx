@@ -53,7 +53,7 @@ const HomePage = async () => {
     <>
       <Header uiType="main" />
       {/* <TestCompo2 /> */}
-      {/* <UserInfo /> */}
+      <UserInfo />
       {/* <ExpenseItemList /> */}
 
       <br />

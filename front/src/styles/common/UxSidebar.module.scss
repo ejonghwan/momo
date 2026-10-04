@@ -1,0 +1,37 @@
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+
+.sidebar__content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
+  margin: auto;
+  width: 70vw;
+  height: 100vh;
+  transform: translateX(70vw);
+  background-color: var(--gray);
+  transition: transform 0.2s cubic-bezier(0, 0.81, 0.5, 1);
+  z-index: 100;
+
+  &.active {
+    transform: translateX(0vw);
+  }
+}
+
+.sidebar__inner {
+  // padding: 20rem;
+}
+.sidebar__content.active + .sidebar__dimd {
+  z-index: 99;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  backdrop-filter: blur(2px);
+  //   opacity: 0.5;
+}

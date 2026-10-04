@@ -4,17 +4,20 @@ import { devtools } from 'zustand/middleware';
 import { Assets, UserType } from '@/types/user/UserType';
 
 interface UserState {
+  isHeaderSide: boolean;
   user: UserType | null;
   profile: UserType | null;
   isInitialized: boolean;
   setUser: (user: UserType | null) => void;
   setUserProfile: (profile: UserType | null) => void;
   setUserAssets: (newAssets: Assets[] | null) => void;
+  setIsHeaderSide: (bool: boolean) => void;
 }
 
 export const useUserStore = create<UserState>()(
   devtools(
     (set) => ({
+      isHeaderSide: false,
       user: null,
       profile: null,
       isInitialized: false,
@@ -22,6 +25,7 @@ export const useUserStore = create<UserState>()(
       setUserProfile: (profile) => set({ profile, isInitialized: true }),
       setUserAssets: (newAssets) =>
         set((state) => (state.profile ? { profile: { ...state.profile, assets: newAssets } } : {})),
+      setIsHeaderSide: (bool: boolean) => set({ isHeaderSide: bool }),
     }),
     { name: 'UserStore' },
   ),
