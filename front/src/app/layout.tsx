@@ -4,6 +4,7 @@ import { Theme } from '@radix-ui/themes';
 
 import { Providers } from '@/app/Provider';
 import AuthProvider from '@/components/auth/AuthProvider';
+import Layout from '@/components/pages/common/Layout';
 import { fontDefault } from '@/lib/ui/fonts';
 import { getCookieStore } from '@/store/supabase/supabase';
 import DeviceTypeLayout from '@/utils/device-type-layout';
@@ -47,10 +48,12 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={`${fontDefault.variable}`}>
-      <body className="">
+      <body>
         <AuthProvider serverUser={user} userProfile={userProfile}>
           <DeviceTypeLayout>
-            <Providers>{children}</Providers>
+            <Providers>
+              <Layout>{children}</Layout>
+            </Providers>
           </DeviceTypeLayout>
         </AuthProvider>
       </body>

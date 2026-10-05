@@ -41,10 +41,7 @@ const UserSignout = () => {
   };
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h2>회원 탈퇴</h2>
-      <p>아래 버튼을 누르면 계정이 영구 삭제됩니다.</p>
-
+    <div>
       <UxButton
         type="button"
         variant={'text'}

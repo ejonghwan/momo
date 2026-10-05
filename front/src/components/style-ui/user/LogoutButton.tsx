@@ -26,7 +26,7 @@ export default function LogoutButton() {
 
     // 2. 로그아웃 후 메인 페이지나 로그인 페이지로 이동
     // AuthProvider가 자동으로 Zustand의 user를 null로 바꿀 것입니다.
-    router.push('/login');
+    router.push('/home');
     router.refresh(); // 서버 컴포넌트들의 데이터를 최신화하기 위해 권장
   };
 

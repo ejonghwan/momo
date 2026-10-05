@@ -1,14 +1,9 @@
 import React from 'react';
 
-import Footer from '@/components/pages/common/Footer';
+import style from '@/styles/common/Layout.module.scss';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      {children}
-      <Footer />
-    </>
-  );
+  return <div className={style['layout__wrap']}>{children}</div>;
 };
 
 export default Layout;

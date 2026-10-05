@@ -7,7 +7,7 @@ import style from '@/app/guide/guide.module.scss';
 const ColorGuide = () => {
   const color = {
     gray: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
-    greyOpacity: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
+    grayOpacity: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     blue: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     red: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
     orange: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -33,23 +33,23 @@ const ColorGuide = () => {
           {color?.gray.map((item) => (
             <span
               key={item}
-              className={clsx(`bg_grey_${item} ${style[item >= 600 ? 'upup' : '']}`)}
+              className={clsx(`bg_gray_${item} ${style[item >= 600 ? 'upup' : '']}`)}
             >
-              .bg_grey_{item}
+              .bg_gray_{item}
             </span>
           ))}
         </li>
-        {/* greyOpacity */}
+        {/* grayOpacity */}
         <li className={style['color__wrap__item']}>
           <h2>
-            <UxText variant={'C_19_M'}>greyOpacity</UxText>
+            <UxText variant={'C_19_M'}>grayOpacity</UxText>
           </h2>
-          {color?.greyOpacity.map((item) => (
+          {color?.grayOpacity.map((item) => (
             <span
               key={item}
-              className={clsx(`bg_grey_${item} ${style[item >= 600 ? 'upup' : '']}`)}
+              className={clsx(`bg_gray_${item} ${style[item >= 600 ? 'upup' : '']}`)}
             >
-              .bg_greyOpacity_{item}
+              .bg_grayOpacity_{item}
             </span>
           ))}
         </li>
@@ -115,9 +115,9 @@ const ColorGuide = () => {
           {color?.gray.map((item) => (
             <span
               key={item}
-              className={clsx(`bg_grey_${item} ${style[item >= 600 ? 'upup' : '']}`)}
+              className={clsx(`bg_gray_${item} ${style[item >= 600 ? 'upup' : '']}`)}
             >
-              .bg_grey_{item}
+              .bg_gray_{item}
             </span>
           ))}
         </li>

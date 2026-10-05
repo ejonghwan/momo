@@ -1,0 +1,15 @@
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+
+.contents__wrap {
+  margin-top: 64rem;
+  flex: 1;
+  max-width: 960rem;
+  width: 100%;
+  height: 100%;
+  margin: 64rem auto 0;
+}
+
+.contents__inner {
+  padding: 20rem;
+}

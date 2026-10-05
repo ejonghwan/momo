@@ -6,8 +6,8 @@
 
   .guide__header {
     // background-color: var(--blue_100);
-    background-color: var(--greyOpacity_100);
-    color: var(--grey_800);
+    background-color: var(--grayOpacity_100);
+    color: var(--gray_800);
     font-size: 20rem;
     height: 56rem;
     flex: 0 0 auto;
@@ -29,8 +29,8 @@
       position: fixed;
       top: 56rem;
       padding: 20rem;
-      background-color: var(--greyOpacity_100);
-      // border-right: 1px solid var(--grey_500);
+      background-color: var(--grayOpacity_100);
+      // border-right: 1px solid var(--gray_500);
 
       & > a {
         display: block;
@@ -78,7 +78,7 @@
     & > span {
       padding: 5rem 10rem;
       border-radius: 4rem;
-      color: var(--grey_900);
+      color: var(--gray_900);
       font-size: 12rem;
 
       & + span {
@@ -87,7 +87,7 @@
     }
 
     .upup {
-      color: var(--grey_200);
+      color: var(--gray_200);
     }
   }
 }

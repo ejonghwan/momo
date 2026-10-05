@@ -1,0 +1,10 @@
+@use '@/styles/helper/mixins' as *;
+@use '@/styles/helper/variables' as *;
+
+.layout__wrap {
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid red;
+  justify-content: space-between;
+  height: 100%;
+}

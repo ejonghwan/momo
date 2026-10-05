@@ -1,4 +1,4 @@
-import Header from '@/components/style-ui/common/Header';
+import Header from '@/components/pages/common/Header';
 import CreateExpense from '@/components/style-ui/expense/CreateExpense';
 import ExpenseItemList from '@/components/style-ui/expense/ExpenseItemList';
 // import LoadExpense from '@/components/style-ui/expense/LoadExpense';
